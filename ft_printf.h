@@ -29,9 +29,11 @@ typedef struct	s_flags
 	char	space;
 	int		precision;
 	int		width;
+	int		bnum;
 }				t_flags;
 
 void			ft_output_d(t_flags *flags, long long argptr);
 int				ft_count_digit(long long n);
+int				ft_printf(const char *s, ...);
 
 #endif

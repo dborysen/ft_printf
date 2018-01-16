@@ -12,10 +12,12 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define BUFF_SIZE 10
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+
 
 typedef struct		s_list
 {
@@ -23,6 +25,22 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_help
+{
+	char			*entr_str;
+	int				fd;
+	struct s_help	*next;
+}					t_help;
+
+typedef struct		s_vars
+{
+	int		ret;
+	int		pos;
+	char	*del_me;
+	char	*hlp;
+
+}					t_vars;
 
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lstadd(t_list **alst, t_list *new);
@@ -61,7 +79,7 @@ void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
-void				ft_putchar(char c);
+unsigned int		ft_putchar(char c);
 void				ft_putstr(char const *s);
 void				ft_putnbr(int n);
 void				ft_strclr(char *s);
@@ -95,7 +113,8 @@ int					ft_reverse_bits(unsigned char octet);
 char				*ft_itoa_base(unsigned long long v, int base);
 char				*ft_lowstr(char *s);
 void				ft_print_unicode(int n);
-void				ft_putlonglong(long long n);
+unsigned int		ft_putlonglong(long long n);
 void				ft_putllu(unsigned long long n);
+int					get_next_line(const int fd, char **line);
 
 #endif

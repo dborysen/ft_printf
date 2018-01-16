@@ -133,7 +133,7 @@ void ft_width_search(char *s, t_flags *flags)
 			m++;
 		}
 		t = ft_strsub(s, i, k);
-		flags->width = atoi(t);
+		flags->width = ft_atoi(t);
 		ft_strdel(&t);
 	}
 }
@@ -157,7 +157,7 @@ void ft_precision_search(char *s, t_flags *flags)
 		k++;
 	}
 	t = ft_strsub(s, i, k);
-	flags->precision = atoi(t);
+	flags->precision = ft_atoi(t);
 	ft_strdel(&t);
 }
 
@@ -165,7 +165,6 @@ void ft_is_a_flag(char *s, t_flags *flags)
 {
 	int i;
 	int k;
-	//char *t;
 
 	k = 0;
 	i = 0;
@@ -180,8 +179,7 @@ void ft_is_a_flag(char *s, t_flags *flags)
 	flags->type = ft_corrent_type(s);
 	if (ft_strchr(s, '.'))
 		ft_precision_search(s, flags);
-	// if (ft_strchr(s, '0'))
-		ft_width_search(s, flags);
+	ft_width_search(s, flags);
 	ft_zero_search(s, flags);
 	if (flags->type != 'c' && flags->type != 's')
 		flags->size_flag = ft_priority_flag(s);
@@ -252,61 +250,6 @@ void ft_output_c(t_flags *flags, long long argptr)
 	else
 		ft_putchar((unsigned char)(argptr));
 }
-
-// void ft_output_d(t_flags *flags, long long argptr)
-// {
-// 	char *s;
-// 	int n;
-// 	int temp;
-// 	// int temp2;
-
-// 	n = 0;
-// 	temp = 0;
-// 	// temp2 = 0;
-// 	// printf("argptr - [%lld]\n", argptr);
-// 	if (flags->size_flag == 'H')
-// 		ft_putnbr((signed char)(argptr));
-// 	else if (flags->size_flag == 'h')
-// 		ft_putnbr((short int)argptr);
-// 	else if (flags->size_flag == 'j')
-// 		ft_putnbr((intmax_t)argptr);
-// 	else if (flags->size_flag == 'l')
-// 		ft_putlonglong((long int)argptr);
-// 	else if (flags->size_flag == 'z')
-// 		ft_putlonglong((size_t)argptr);
-// 	else
-// 	{
-// 		if ((int)argptr < 0)
-// 			temp = 1;
-// 		if (flags->plus == '+' || (int)argptr < 0 || flags->space == ' ')
-// 		{
-// 			flags->width = flags->width - 1;
-// 			if (flags->zero == '0' && (int)argptr < 0)
-// 			{
-// //				temp = 1;
-// 				argptr = -argptr;
-// 				ft_putchar('-');
-// 			}
-// 			else if (flags->zero == '0' && flags->plus == '+')
-// 				ft_putchar('+');
-// 			else if (flags->zero == '0' && flags->space == ' ')
-// 				ft_putchar(' ');
-// 		}
-// 		while (n < (flags->width - ft_count_digit((int)argptr)))
-// 		{
-// 			if (flags->zero != '0')
-// 				ft_putchar(' ');
-// 			else
-// 				ft_putchar('0');
-// 			n++;
-// 		}
-// 		// if (temp == 1)
-// 		// 	ft_putchar('-');
-// 		if (flags->zero != '0' && flags->plus == '+' && temp != 1)
-// 			ft_putchar('+');
-// 		ft_putlonglong((int)argptr);
-// 	}
-// }
 
 void ft_output_D(t_flags *flags, long long argptr)
 {
@@ -482,19 +425,22 @@ void  ft_which_output_u(char type, void (**ft_outputu)(t_flags *, unsigned long 
 		*ft_outputu = &ft_output_U;
 }
 
-void ft_printf(const char *s, ...) 
-{ 
-	int i;
-	char *tmp_str;
-	void (*ft_output)(t_flags*, long long);
-	void (*ft_outputu)(t_flags*, unsigned long long);
-	t_flags *flags;
-	va_list argptr;
+int ft_printf(const char *s, ...) 
+{
+	int		i;
+	int		ret;
+	char	*tmp_str;
+	void	(*ft_output)(t_flags*, long long);
+	void	(*ft_outputu)(t_flags*, unsigned long long);
+	t_flags	*flags;
+	va_list	argptr;
 
 	i = 0;
+	ret = 0;
 	flags = (t_flags*)malloc(sizeof(t_flags));
 	flags->precision = 0;
 	flags->width = 0;
+	flags->bnum = 0;
 	va_start(argptr, s);
 	while (s[i])
 	{
@@ -507,7 +453,7 @@ void ft_printf(const char *s, ...)
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
-			// printf("flags->minus - [%  c]\n", flags->minus);
+			// printf("flags->minus - [%c]\n", flags->minus);
 			// printf("flags->zero - [%c]\n", flags->zero);
 			// printf("flags->hash - [%c]\n", flags->hash);
 			// printf("flags->space - [%c]\n", flags->space);
@@ -531,35 +477,18 @@ void ft_printf(const char *s, ...)
 		}
 		else if (s[i] == '%' && s[i + 1] == '%')
 		{
-			ft_putchar(s[i]);
+			flags->bnum += ft_putchar(s[i]);
 			i = i + 2;
 		}
 		else
-			ft_putchar(s[i++]);
+			flags->bnum += ft_putchar(s[i++]);
 	}
 	va_end(argptr);
 	free(flags);
+	printf("flags->bnum - [%u]\n", flags->bnum);
+	return (flags->bnum);
 }
 
-// int main(void)
-// {
-// 	int k;
-// 	char *p;
-// 	setlocale(LC_ALL, "");
-// 	//max -  18446744073709551615
-
-// 	   printf("orig - [%12hhd]\n", 45);
-// 	ft_printf("mine - [%12hhd]\n", 45);
-// 	//    printf("orig - %hhd\n", 4294967295);
-// 	// ft_printf("mine - %hhd\n", 4294967295);
-// 	// ft_printf("mamasita %p hello %% again %X %S\n", p, 61, L"🎈");
-// 	//    printf("mamasita %p hello %% again %X %S\n", p, 61, L"🎈");
-// 	// ft_printf("%X %x %% %o %s %p\n", 61, 61, 61, "hello", &p);
-// 	//    printf("%X %x %% %o %s %p\n", 61, 61, 61, "hello", &p);
-// 	//    printf("%D %U %o %O\n", 8422, 61, 9223372036854775807, 9223372036854775807);
-// 	// ft_printf("%D %U %o %O\n", 8422, 61, 9223372036854775807, 9223372036854775807);
-// 	return (0);
-// }
 
 
 

@@ -12,14 +12,18 @@
 
 #include "libft.h"
 
-void	ft_putlonglong(long long n)
+unsigned int	ft_putlonglong(long long n)
 {
+	unsigned int k;
+
+	k = 0;
 	if (n < 0)
 	{
 		n = -n;
 		ft_putchar('-');
 	}
 	if (n / 10)
-		ft_putlonglong(n / 10);
-	ft_putchar(n % 10 + '0');
+		k = ft_putlonglong(n / 10);
+	k = k + ft_putchar(n % 10 + '0');
+	return (k);
 }
