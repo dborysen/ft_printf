@@ -267,8 +267,11 @@ void ft_output_o(t_flags *flags, long long argptr)
 {
 	char *temp;
 
-	if (flags->hash == '#')
+	if (flags->hash == '#' && argptr != 0)
+	{
 		ft_putchar('0');
+		flags->bnum++;
+	}
 	if (flags->size_flag == 'H')
 		temp = ft_itoa_base_pf((unsigned char)argptr, 8, flags);
 	else if (flags->size_flag == 'h')
@@ -293,7 +296,10 @@ void ft_output_O(t_flags *flags, long long argptr)
 
 	(void)flags;
 	if (flags->hash == '#')
+	{
 		ft_putchar('0');
+		flags->bnum++;
+	}
 	temp = ft_itoa_base_pf((unsigned long)argptr, 8, flags);
 	ft_putstr(temp);
 	ft_strdel(&temp);
