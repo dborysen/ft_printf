@@ -118,21 +118,27 @@ void ft_width_search(char *s, t_flags *flags)
 
 	i = 0;
 	k = 0;
+	// printf("string - [%s]\n", s);
 	while (s[i])
 	{
-		if (s[i - 1] != '.' && (s[i] >= '0' && s[i] <= '9'))
+		if (s[i - 1] != '.' && (s[i] >= '1' && s[i] <= '9'))
 			break;
 		i++;
 	}
+	// printf("s + i - [%s]\n", s + i);
 	if (i < ft_strlen(s))
 	{
 		m = i;
+		// printf("s[m] - [%d]\n", s[m]);
 		while (s[m] >= '0' && s[m] <= '9')
 		{
 			k++;
 			m++;
 		}
 		t = ft_strsub(s, i, k);
+		// printf("i - [%zu]\n", i);
+		// printf("s[k] - [%d]\n", s[k]);
+		// printf("sub string - [%s]\n", t);
 		flags->width = ft_atoi(t);
 		ft_strdel(&t);
 	}

@@ -24,42 +24,59 @@ void right_alignment(t_flags *flags, long long argptr)
 	temp_width = 0;
 	zero_num = 0;
 	n = 0;
-	//flags->bnum += ft_putlonglong(argptr);
-	// printf("%lld\n", argptr);
+	// printf("flags->plus - [%c]\n", flags->plus);
+	// printf("flags->zero - [%c]\n", flags->zero);
+	// printf("value - [%ld]\n", argptr);
 	if (flags->precision != 0)
 		zero_num = flags->precision - ft_count_digit((int)argptr);
 	if (argptr < 0)
 		temp = 1;
-	if (flags->plus == '+' || (int)argptr < 0 || flags->space == ' ')
+	if (flags->plus == '+' || argptr < 0 || flags->space == ' ')
 	{
 		flags->width = flags->width - 1;
-		if (flags->zero == '0' && (int)argptr < 0)
+		if ((flags->zero == '0' || flags->precision != 0) && argptr < 0 )
 		{
+			// printf("IM IN!\n");
 			argptr = -argptr;
 			flags->bnum += ft_putchar('-');
 		}
 		else if (flags->zero == '0' && flags->plus == '+')
+		{
+			// printf("IM IN!\n");
 			flags->bnum += ft_putchar('+');
+		}
 		else if (flags->zero == '0' && flags->space == ' ')
 			flags->bnum += ft_putchar(' ');
-		else if (flags->zero != '0' && (int)argptr < 0)
-			argptr = -argptr;
+		else if (flags->zero != '0' && argptr < 0)
+		{
+			// argptr = -argptr;
+			flags->bnum++;
+			// printf("IM IN!\n");
+		}
 		else if (flags->zero != '0' && flags->space == ' ' && flags->plus != '+')
 			flags->bnum += ft_putchar(' ');
 	}
+	// printf("num of zeros - [%d]\n", flags->width);
 	while (n < (flags->width - ft_count_digit(argptr) - zero_num))
 	{
 		if (flags->zero != '0' || flags->precision != 0)
+		{
 			flags->bnum += ft_putchar(' ');
+		}
 		else if (flags->precision == 0)
+		{
 			flags->bnum += ft_putchar('0');
+		}
 		n++;
 	}
 	n = 0;
 	if (flags->zero != '0' && flags->plus == '+' && temp != 1)
 		flags->bnum += ft_putchar('+');
-	if (flags->zero != '0' && temp == 1)
-		flags->bnum += ft_putchar('-');
+	// else if (flags->zero != '0' && temp == 1)
+	// {
+	// 	flags->bnum += ft_putchar('-');
+	// 	printf("IM IN!\n");
+	// }
 	if (flags->precision != 0)
 	{
 		while (n++ < zero_num)
@@ -67,8 +84,11 @@ void right_alignment(t_flags *flags, long long argptr)
 		n = 0;
 		flags->bnum += ft_putlonglong(argptr);
 	}
-	else 
+	// else if (argptr == 0 && flags->precision == 0)
+	// 	return ;
+	else
 		flags->bnum += ft_putlonglong(argptr);
+	// ft_putlonglong(-9223372036854775807);
 	// printf("num of bytes - [%d]\n", ft_putlonglong(argptr));
 	// printf("argptr - [%lld]\n", argptr);
 }
@@ -100,9 +120,13 @@ void left_alignment(t_flags *flags, long long argptr)
 			flags->bnum += ft_putchar('0');
 		flags->bnum += ft_putlonglong(argptr);
 		n = 0;
-		if (neg == 1 || flags->plus == '+' || flags->space ==' ')
-			while (n++ < (flags->width - flags->precision - 1))
+		if (flags->width > flags->precision)
+		{
+			if (neg == 1 || flags->plus == '+' || flags->space == ' ')
+				n++;
+			while (n++ < (flags->width - flags->precision))
 				flags->bnum += ft_putchar(' ');
+		}
 	}
 	else
 	{
@@ -114,6 +138,8 @@ void left_alignment(t_flags *flags, long long argptr)
 			flags->bnum += ft_putchar('+');
 		else if (flags->space == ' ' && (int)argptr >= 0)
 			flags->bnum += ft_putchar(' ');
+		else if (neg == 1)
+			flags->bnum++;
 		flags->bnum += ft_putlonglong(argptr);
 		// printf("space num - [%d]\n", flags->width);
 		while (n < (flags->width - ft_count_digit(argptr)))
@@ -126,11 +152,6 @@ void left_alignment(t_flags *flags, long long argptr)
 
 void ft_output_d(t_flags *flags, long long argptr)
 {
-	int n;
-	int temp;
-
-	n = 0;
-	temp = 0;
 	if (flags->size_flag == 'H')
 		(flags->minus == '-') ? left_alignment(flags, (signed char)argptr) : 
 		right_alignment(flags, (signed char)argptr);
@@ -146,6 +167,9 @@ void ft_output_d(t_flags *flags, long long argptr)
 	else if (flags->size_flag == 'z')
 		(flags->minus == '-') ? left_alignment(flags, (size_t)argptr) :
 		right_alignment(flags, (size_t)argptr);
+	else if (flags->size_flag == 'L')
+		(flags->minus == '-') ? left_alignment(flags, argptr) :
+		right_alignment(flags, argptr);
 	else
 		(flags->minus == '-') ? left_alignment(flags, (int)argptr) : 
 		right_alignment(flags, (int)argptr);
