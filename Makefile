@@ -14,9 +14,9 @@ NAME = libftprintf.a
 
 LIBFT = libft
 
-SRCS = ft_printf.c ft_output_d.c
+SRCS = ft_printf.c ft_output_d.c ft_itoa_base_pf.c
 
-OBJECT = ft_printf.o ft_output_d.o
+OBJECT = ft_printf.o ft_output_d.o ft_itoa_base_pf.o
 
 INCLUDES = ft_printf.h
 
@@ -32,7 +32,7 @@ $(NAME):
 	@ranlib $(NAME)
 
 comp:
-	@gcc  main.c ft_printf.c ft_output_d.c libft/libft.a && ./a.out | cat -e
+	@gcc  main.c ft_printf.c ft_output_d.c ft_itoa_base_pf.c libft/libft.a && ./a.out | cat -e
 
 clean:
 	@rm -f $(OBJECT)

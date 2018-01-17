@@ -270,19 +270,19 @@ void ft_output_o(t_flags *flags, long long argptr)
 	if (flags->hash == '#')
 		ft_putchar('0');
 	if (flags->size_flag == 'H')
-		temp = ft_itoa_base((unsigned char)argptr, 8);
+		temp = ft_itoa_base_pf((unsigned char)argptr, 8, flags);
 	else if (flags->size_flag == 'h')
-		temp = ft_itoa_base((unsigned short int)argptr, 8);
+		temp = ft_itoa_base_pf((unsigned short int)argptr, 8, flags);
 	else if (flags->size_flag == 'z')
-		temp = ft_itoa_base((size_t)argptr, 8);
+		temp = ft_itoa_base_pf((size_t)argptr, 8, flags);
 	else if (flags->size_flag == 'l')
-		temp = ft_itoa_base((unsigned long)argptr, 8);
+		temp = ft_itoa_base_pf((unsigned long)argptr, 8, flags);
 	else if (flags->size_flag == 'L')
-		temp = ft_itoa_base((unsigned long long)argptr, 8);
+		temp = ft_itoa_base_pf((unsigned long long)argptr, 8, flags);
 	else if (flags->size_flag == 'j')
-		temp = ft_itoa_base((uintmax_t)argptr, 8);
+		temp = ft_itoa_base_pf((uintmax_t)argptr, 8, flags);
 	else
-		temp = ft_itoa_base((unsigned int)argptr, 8);
+		temp = ft_itoa_base_pf((unsigned int)argptr, 8, flags);
 	ft_putstr(temp);
 	ft_strdel(&temp);
 }
@@ -294,7 +294,7 @@ void ft_output_O(t_flags *flags, long long argptr)
 	(void)flags;
 	if (flags->hash == '#')
 		ft_putchar('0');
-	temp = ft_itoa_base((unsigned long)argptr, 8);
+	temp = ft_itoa_base_pf((unsigned long)argptr, 8, flags);
 	ft_putstr(temp);
 	ft_strdel(&temp);
 }
@@ -305,19 +305,19 @@ void ft_output_x(t_flags *flags, long long argptr)
 	if (flags->hash == '#')
 		ft_putstr("0x");
 	if (flags->size_flag == 'H')
-		temp = ft_lowstr(ft_itoa_base((unsigned char)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((unsigned char)argptr, 16, flags));
 	else if (flags->size_flag == 'h')
-		temp = ft_lowstr(ft_itoa_base((unsigned short int)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((unsigned short int)argptr, 16, flags));
 	else if (flags->size_flag == 'z')
-		temp = ft_lowstr(ft_itoa_base((size_t)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((size_t)argptr, 16, flags));
 	else if (flags->size_flag == 'j')
-		temp = ft_lowstr(ft_itoa_base((uintmax_t)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((uintmax_t)argptr, 16, flags));
 	else if (flags->size_flag == 'l')
-		temp = ft_lowstr(ft_itoa_base((unsigned long)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((unsigned long)argptr, 16, flags));
 	else if (flags->size_flag == 'L')
-		temp = ft_lowstr(ft_itoa_base((unsigned long long)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((unsigned long long)argptr, 16, flags));
 	else 
-		temp = ft_lowstr(ft_itoa_base((unsigned int)argptr, 16));
+		temp = ft_lowstr(ft_itoa_base_pf((unsigned int)argptr, 16, flags));
 	ft_putstr(temp);
 	ft_strdel(&temp);
 }
@@ -327,21 +327,24 @@ void ft_output_X(t_flags *flags, long long argptr)
 	char *temp;
 
 	if (flags->hash == '#')
+	{
 		ft_putstr("0X");
+		flags->bnum = flags->bnum + 2;
+	}
 	if (flags->size_flag == 'H')
-		temp = ft_itoa_base((unsigned char)argptr, 16);
+		temp = ft_itoa_base_pf((unsigned char)argptr, 16, flags);
 	else if (flags->size_flag == 'h')
-		temp = ft_itoa_base((unsigned short int)argptr, 16);
+		temp = ft_itoa_base_pf((unsigned short int)argptr, 16, flags);
 	else if (flags->size_flag == 'z')
-		temp = ft_itoa_base((size_t)argptr, 16);
+		temp = ft_itoa_base_pf((size_t)argptr, 16, flags);
 	else if (flags->size_flag == 'j')
-		temp = ft_itoa_base((uintmax_t)argptr, 16);
+		temp = ft_itoa_base_pf((uintmax_t)argptr, 16, flags);
 	else if (flags->size_flag == 'l')
-		temp = ft_itoa_base((unsigned long)argptr, 16);
+		temp = ft_itoa_base_pf((unsigned long)argptr, 16, flags);
 	else if (flags->size_flag == 'L')
-		temp = ft_itoa_base((unsigned long long)argptr, 16);
+		temp = ft_itoa_base_pf((unsigned long long)argptr, 16, flags);
 	else 
-		temp = ft_itoa_base((unsigned int)argptr, 16);
+		temp = ft_itoa_base_pf((unsigned int)argptr, 16, flags);
 	ft_putstr(temp);
 	ft_strdel(&temp);
 }
@@ -383,7 +386,8 @@ void ft_output_p(t_flags *flags, long long argptr)
 	char *temp;
 
 	(void)flags;
-	temp = ft_lowstr(ft_itoa_base(argptr, 16));
+	flags->bnum = flags->bnum + 2;
+	temp = ft_lowstr(ft_itoa_base_pf(argptr, 16, flags));
 	ft_putstr("0x");
 	ft_putstr(temp);
 	ft_strdel(&temp);
@@ -491,7 +495,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	// printf("flags->bnum - [%u]\n", flags->bnum);
+	printf("\nflags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 
