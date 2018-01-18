@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <locale.h>
+// # include <locale.h>
 # include <stdarg.h>
 # include <stdint.h>
 # include "libft/includes/libft.h"

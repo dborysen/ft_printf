@@ -118,27 +118,21 @@ void ft_width_search(char *s, t_flags *flags)
 
 	i = 0;
 	k = 0;
-	// printf("string - [%s]\n", s);
 	while (s[i])
 	{
 		if (s[i - 1] != '.' && (s[i] >= '1' && s[i] <= '9'))
 			break;
 		i++;
 	}
-	// printf("s + i - [%s]\n", s + i);
 	if (i < ft_strlen(s))
 	{
 		m = i;
-		// printf("s[m] - [%d]\n", s[m]);
 		while (s[m] >= '0' && s[m] <= '9')
 		{
 			k++;
 			m++;
 		}
 		t = ft_strsub(s, i, k);
-		// printf("i - [%zu]\n", i);
-		// printf("s[k] - [%d]\n", s[k]);
-		// printf("sub string - [%s]\n", t);
 		flags->width = ft_atoi(t);
 		ft_strdel(&t);
 	}
@@ -309,7 +303,10 @@ void ft_output_x(t_flags *flags, long long argptr)
 {
 	char *temp;
 	if (flags->hash == '#')
+	{
 		ft_putstr("0x");
+		flags->bnum = flags->bnum + 2;
+	}
 	if (flags->size_flag == 'H')
 		temp = ft_lowstr(ft_itoa_base_pf((unsigned char)argptr, 16, flags));
 	else if (flags->size_flag == 'h')
@@ -458,6 +455,8 @@ int ft_printf(const char *s, ...)
 	flags->width = 0;
 	flags->bnum = 0;
 	va_start(argptr, s);
+	if (MB_CUR_MAX == 1)
+		return (-1);
 	while (s[i])
 	{
 		if (s[i] == '%' && s[i + 1] != '%')
@@ -465,7 +464,6 @@ int ft_printf(const char *s, ...)
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 		//	printf("tmp - str [%s]\n", tmp_str);
 			ft_is_a_flag(tmp_str, flags);
-
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
@@ -477,6 +475,7 @@ int ft_printf(const char *s, ...)
 			// printf("flags->width - [%d]\n", flags->width);
 
 			ft_strdel(&tmp_str);
+			// printf("MB_CUR_MAX - [%d]\n", MB_CUR_MAX);
 			// printf("arg - [%lld]\n", va_arg(argptr, long long int));
 			if (flags->type == 'u' || flags->type == 'U')
 			{
@@ -501,7 +500,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	// printf("\nflags->bnum - [%u]\n", flags->bnum);
+	// printf("flags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 

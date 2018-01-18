@@ -11,17 +11,20 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <locale.h>
 #include <stdio.h>
 
 int main(void)
 {
-	// int k;
+	int k;
 	char *p;
 	setlocale(LC_ALL, "");
 	//max -  18446744073709551615
 
-	   printf("orig - [%X]\n", 2147483647);
-	ft_printf("%X", 2147483647);
+	k =  printf("orig - [%C] mamasita [%d]\n", L'狼', 42);
+	ft_printf("mine - [%C] mamasita [%d]\n", L'狼', 42);
+	// printf("orig return - [%d]\n", k);
+	// ft_printf("%#x", 42);
 	// ft_printf("%ld", -2147483649);
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);

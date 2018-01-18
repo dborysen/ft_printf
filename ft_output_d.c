@@ -24,9 +24,6 @@ void right_alignment(t_flags *flags, long long argptr)
 	temp_width = 0;
 	zero_num = 0;
 	n = 0;
-	// printf("flags->plus - [%c]\n", flags->plus);
-	// printf("flags->zero - [%c]\n", flags->zero);
-	// printf("value - [%ld]\n", argptr);
 	if (flags->precision != 0)
 		zero_num = flags->precision - ft_count_digit((int)argptr);
 	if (argptr < 0)
@@ -36,47 +33,29 @@ void right_alignment(t_flags *flags, long long argptr)
 		flags->width = flags->width - 1;
 		if ((flags->zero == '0' || flags->precision != 0) && argptr < 0 )
 		{
-			// printf("IM IN!\n");
 			argptr = -argptr;
 			flags->bnum += ft_putchar('-');
 		}
 		else if (flags->zero == '0' && flags->plus == '+')
-		{
-			// printf("IM IN!\n");
 			flags->bnum += ft_putchar('+');
-		}
 		else if (flags->zero == '0' && flags->space == ' ')
 			flags->bnum += ft_putchar(' ');
 		else if (flags->zero != '0' && argptr < 0)
-		{
-			// argptr = -argptr;
 			flags->bnum++;
-			// printf("IM IN!\n");
-		}
 		else if (flags->zero != '0' && flags->space == ' ' && flags->plus != '+')
 			flags->bnum += ft_putchar(' ');
 	}
-	// printf("num of zeros - [%d]\n", flags->width);
 	while (n < (flags->width - ft_count_digit(argptr) - zero_num))
 	{
 		if (flags->zero != '0' || flags->precision != 0)
-		{
 			flags->bnum += ft_putchar(' ');
-		}
 		else if (flags->precision == 0)
-		{
 			flags->bnum += ft_putchar('0');
-		}
 		n++;
 	}
 	n = 0;
 	if (flags->zero != '0' && flags->plus == '+' && temp != 1)
 		flags->bnum += ft_putchar('+');
-	// else if (flags->zero != '0' && temp == 1)
-	// {
-	// 	flags->bnum += ft_putchar('-');
-	// 	printf("IM IN!\n");
-	// }
 	if (flags->precision != 0)
 	{
 		while (n++ < zero_num)
@@ -84,56 +63,52 @@ void right_alignment(t_flags *flags, long long argptr)
 		n = 0;
 		flags->bnum += ft_putlonglong(argptr);
 	}
-	// else if (argptr == 0 && flags->precision == 0)
-	// 	return ;
 	else
 		flags->bnum += ft_putlonglong(argptr);
-	// ft_putlonglong(-9223372036854775807);
-	// printf("num of bytes - [%d]\n", ft_putlonglong(argptr));
-	// printf("argptr - [%lld]\n", argptr);
+}
+
+void precision_part(t_flags *flags, long long argptr, int n, int neg)
+{
+	int zero_num;
+
+	zero_num = flags->precision - ft_count_digit((int)argptr);
+	if (flags->plus == '+' && (int)argptr > 0)
+		flags->bnum += ft_putchar('+');
+	else if ((int)argptr < 0)
+	{
+		flags->bnum += ft_putchar('-');
+		argptr = -argptr;
+	}
+	else if (flags->space == ' ')
+		flags->bnum += ft_putchar(' ');
+	while (n++ < zero_num)
+		flags->bnum += ft_putchar('0');
+	flags->bnum += ft_putlonglong(argptr);
+	n = 0;
+	if (flags->width > flags->precision)
+	{
+		if (neg == 1 || flags->plus == '+' || flags->space == ' ')
+			n++;
+		while (n++ < (flags->width - flags->precision))
+			flags->bnum += ft_putchar(' ');
+	}
 }
 
 void left_alignment(t_flags *flags, long long argptr)
 {
 	int n;
-	int zero_num;
 	int neg;
 
 	n = 0;
 	neg = 0;
 	if (argptr < 0)
 		neg = 1;
-	zero_num = 0;
 	if (flags->precision != 0)
-	{
-		zero_num = flags->precision - ft_count_digit((int)argptr);
-		if (flags->plus == '+' && (int)argptr > 0)
-			flags->bnum += ft_putchar('+');
-		else if ((int)argptr < 0)
-		{
-			flags->bnum += ft_putchar('-');
-			argptr = - argptr;
-		}
-		else if (flags->space == ' ')
-			flags->bnum += ft_putchar(' ');
-		while (n++ < zero_num)
-			flags->bnum += ft_putchar('0');
-		flags->bnum += ft_putlonglong(argptr);
-		n = 0;
-		if (flags->width > flags->precision)
-		{
-			if (neg == 1 || flags->plus == '+' || flags->space == ' ')
-				n++;
-			while (n++ < (flags->width - flags->precision))
-				flags->bnum += ft_putchar(' ');
-		}
-	}
+		precision_part(flags, argptr, n, neg);
 	else
 	{
 		if (neg == 1|| flags->plus == '+' || flags->space == ' ')
-		{
-			flags->width = flags->width - 1;
-		}		
+			flags->width = flags->width - 1;	
 		if (flags->plus == '+' && (int)argptr > 0)
 			flags->bnum += ft_putchar('+');
 		else if (flags->space == ' ' && (int)argptr >= 0)
@@ -141,12 +116,8 @@ void left_alignment(t_flags *flags, long long argptr)
 		else if (neg == 1)
 			flags->bnum++;
 		flags->bnum += ft_putlonglong(argptr);
-		// printf("space num - [%d]\n", flags->width);
-		while (n < (flags->width - ft_count_digit(argptr)))
-		{
+		while (n++ < (flags->width - ft_count_digit(argptr)))
 			flags->bnum += ft_putchar(' ');
-			n++;
-		}
 	}
 }
 
