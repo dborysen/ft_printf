@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putllu.c                                        :+:      :+:    :+:   */
+/*   ft_count_digit_u.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dborysen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/08 11:48:53 by dborysen          #+#    #+#             */
-/*   Updated: 2018/01/08 11:48:54 by dborysen         ###   ########.fr       */
+/*   Created: 2018/01/18 15:56:42 by dborysen          #+#    #+#             */
+/*   Updated: 2018/01/18 15:56:43 by dborysen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putllu(unsigned long long n)
+int	ft_count_digit_u(unsigned long long n)
 {
-	if (n / 10)
-		ft_putllu(n / 10);
-	ft_putchar(n % 10 + '0');
+	int i;
+
+	i = 0;
+	while ((n / 10))
+	{
+		n = n / 10;
+		i++;
+	}
+	return (i + 1);
 }

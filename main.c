@@ -20,11 +20,10 @@ int main(void)
 	// setlocale(LC_ALL, "");
 	//max -  18446744073709551615
 
-	   printf("orig - [%-d]\n", 42);
-	ft_printf("mine - [%-d]\n", 42);
+	   printf("orig - [% %]\n");   // printf("orig - [%hU]\n", 4294967296);
+	ft_printf("mine - [% %]\n");
 
-
-	ft_printf("%-d", 42);
+	// ft_printf("%-d", 42);
 	// ft_printf("%ld", -2147483649);
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);

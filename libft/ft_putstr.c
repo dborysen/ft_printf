@@ -17,10 +17,14 @@ int	ft_putstr(char const *s)
 	int i;
 
 	i = 0;
-	while (s[i])
+	if (s && *s)
 	{
-		write(1, &s[i], 1);
-		i++;
+		while (s[i])
+		{
+			write(1, &s[i], 1);
+			i++;
+		}
+		return (i);
 	}
-	return (i);
+	return (0);
 }

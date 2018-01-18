@@ -11,8 +11,54 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+// #include <stdio.h>
 
-void ft_output_s(t_flags *flags, long long argptr)
+void	right_alignment_s(t_flags *flags, long long argptr)
+{
+	int k;
+
+	k = 0;
+	if ((unsigned long)flags->width >
+		ft_strlen((char*)argptr) - flags->precision)
+	{
+		while ((unsigned long)flags->width-- >
+		ft_strlen((char*)argptr) - flags->precision)
+		{
+			if (flags->zero == '0')
+				flags->bnum += ft_putchar('0');
+			else
+				flags->bnum += ft_putchar(' ');
+		}
+	}
+	if (flags->precision != 0)
+	{
+		if (ft_strlen((char*)argptr) == 0)
+			return ;
+		while (k < flags->precision)
+			flags->bnum += ft_putchar(((char*)argptr)[k++]);
+	}
+	else
+		(flags->bnum += ft_putstr((char*)argptr));
+}
+
+void	left_alignment_s(t_flags *flags, long long argptr)
+{
+	int k;
+
+	k = 0;
+	if (flags->precision != 0)
+		while (k < flags->precision)
+			(flags->bnum += ft_putchar(((char*)argptr)[k++]));
+	else
+		flags->bnum += ft_putstr((char*)argptr);
+	if ((unsigned long)flags->width >
+	ft_strlen((char*)argptr) - flags->precision)
+		while ((unsigned long)flags->width-- >
+		ft_strlen((char*)argptr) - flags->precision)
+			flags->bnum += ft_putchar(' ');
+}
+
+void	ft_output_s(t_flags *flags, long long argptr)
 {
 	int *m;
 	int k;
@@ -25,32 +71,15 @@ void ft_output_s(t_flags *flags, long long argptr)
 		while (m[k])
 			ft_print_unicode(m[k++]);
 	}
-	else
+	if ((char*)argptr == NULL)
 	{
-		if (flags->minus == '-')
-		{
-			if (flags->precision != 0)
-				while (k < flags->precision)
-					(flags->bnum += ft_putchar(((char*)argptr)[k++]));
-			else
-			{
-				flags->bnum += ft_putstr((char*)argptr);
-			}
-			if ((unsigned long)flags->width > ft_strlen((char*)argptr) - flags->precision)
-				while ((unsigned long)flags->width-- > ft_strlen((char*)argptr) - flags->precision)
-					flags->bnum += ft_putchar(' ');
-		}
-		else
-		{
-			if ((unsigned long)flags->width > ft_strlen((char*)argptr) - flags->precision)
-				while ((unsigned long)flags->width-- > ft_strlen((char*)argptr) - flags->precision)
-					(flags->zero == '0') ? (flags->bnum += ft_putchar('0')) :
-						(flags->bnum += ft_putchar(' '));
-			if (flags->precision != 0)
-				while (k < flags->precision)
-					flags->bnum += ft_putchar(((char*)argptr)[k++]);
-			else
-				(flags->bnum += ft_putstr((char*)argptr));
-		}
+		flags->bnum += ft_putstr("(null)");
+		return ;
 	}
+	if (ft_strlen((char*)argptr) == 0)
+		flags->precision = 0;
+	if (flags->minus == '-')
+		left_alignment_s(flags, argptr);
+	else
+		right_alignment_s(flags, argptr);
 }

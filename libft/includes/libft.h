@@ -114,7 +114,8 @@ char				*ft_itoa_base(unsigned long long v, int base);
 char				*ft_lowstr(char *s);
 void				ft_print_unicode(int n);
 unsigned int		ft_putlonglong(long long n);
-void				ft_putllu(unsigned long long n);
+unsigned int		ft_putllu(unsigned long long n);
 int					get_next_line(const int fd, char **line);
+int					ft_count_digit_u(unsigned long long n);
 
 #endif

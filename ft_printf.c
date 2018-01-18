@@ -226,36 +226,6 @@ void ft_output_S(t_flags *flags, long long argptr)
 		ft_print_unicode(m[k++]);
 }
 
-// void ft_output_s(t_flags *flags, long long argptr)
-// {
-// 	int *m;
-// 	int k;
-
-// 	k = 0;
-// 	m = 0;
-// 	if (flags->size_flag == 'l')
-// 	{
-// 		m = (int*)(argptr);
-// 		while (m[k])
-// 			ft_print_unicode(m[k++]);
-// 	}
-// 	else
-// 	{
-// 		if (flags->precision != 0)
-// 		{
-// 			while (k < flags->precision)
-// 				flags->bnum += ft_putchar(((char*)argptr)[k++]);
-// 			// ft_putstr((char*)argptr);
-// 		}
-// 		if ((unsigned long)flags->width > ft_strlen((char*)argptr) - flags->precision)
-// 		{
-// 			while (flags->width-- > flags->precision)
-// 				flags->bnum += ft_putchar(' ');
-// 		}
-// 	}
-// 	// printf("argptr- [%c]\n", ((char*)argptr)[0]);
-// }
-
 void ft_output_c(t_flags *flags, long long argptr)
 {
 	if (flags->size_flag == 'l')
@@ -275,10 +245,7 @@ void ft_output_o(t_flags *flags, long long argptr)
 	char *temp;
 
 	if (flags->hash == '#' && argptr != 0)
-	{
-		ft_putchar('0');
-		flags->bnum++;
-	}
+		flags->bnum += ft_putchar('0');
 	if (flags->size_flag == 'H')
 		temp = ft_itoa_base_pf((unsigned char)argptr, 8, flags);
 	else if (flags->size_flag == 'h')
@@ -293,7 +260,7 @@ void ft_output_o(t_flags *flags, long long argptr)
 		temp = ft_itoa_base_pf((uintmax_t)argptr, 8, flags);
 	else
 		temp = ft_itoa_base_pf((unsigned int)argptr, 8, flags);
-	ft_putstr(temp);
+	flags->bnum += ft_putstr(temp);
 	ft_strdel(&temp);
 }
 
@@ -365,36 +332,18 @@ void ft_output_X(t_flags *flags, long long argptr)
 	ft_strdel(&temp);
 }
 
-void ft_output_u(t_flags *flags, unsigned long long argptr)
-{
-	if (flags->size_flag == 'H')
-		ft_putllu((unsigned char)argptr);
-	else if (flags->size_flag == 'h')
-		ft_putllu((unsigned short int)argptr);
-	else if (flags->size_flag == 'z')
-		ft_putllu((size_t)argptr);
-	else if (flags->size_flag == 'j')
-		ft_putllu((uintmax_t)argptr);
-	else if (flags->size_flag == 'l')
-		ft_putllu((unsigned long)argptr);
-	else if (flags->size_flag == 'L')
-		ft_putllu((unsigned long long)argptr);
-	else
-		ft_putllu((unsigned int)argptr);
-}
-
 void ft_output_U(t_flags *flags, unsigned long long argptr)
 {
 	if (flags->size_flag == 'H')
-		ft_putllu((unsigned char)argptr);
+		flags->bnum += ft_putllu((unsigned char)argptr);
 	else if (flags->size_flag == 'h')
-		ft_putllu((short int)argptr);
+		flags->bnum += ft_putllu((unsigned short int)argptr);
 	else if (flags->size_flag == 'z')
-		ft_putllu((size_t)argptr);
+		flags->bnum += ft_putllu((size_t)argptr);
 	else if (flags->size_flag == 'j')
-		ft_putllu((intmax_t)argptr);
+		flags->bnum += ft_putllu((uintmax_t)argptr);
 	else
-		ft_putllu(argptr);
+		flags->bnum += ft_putllu(argptr);
 }
 
 void ft_output_p(t_flags *flags, long long argptr)
@@ -473,10 +422,13 @@ int ft_printf(const char *s, ...)
 		if (s[i] == '%' && s[i + 1] != '%')
 		{
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
-		//	printf("tmp - str [%s]\n", tmp_str);
 			ft_is_a_flag(tmp_str, flags);
-			if (MB_CUR_MAX == 1 && flags->type == 'C')
+			if (MB_CUR_MAX == 1 && (flags->type == 'C' || 
+				(flags->type == 'c' && flags->size_flag == 'l')))
+			{
 				flags->type = 'c';
+				flags->size_flag = 0;
+			}
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
@@ -487,7 +439,6 @@ int ft_printf(const char *s, ...)
 			// printf("flags->precision - [%d]\n", flags->precision);
 			// printf("flags->width - [%d]\n", flags->width);
 			ft_strdel(&tmp_str);
-			// printf("arg - [%lld]\n", va_arg(argptr, long long int));
 			if (flags->type == 'u' || flags->type == 'U')
 			{
 				ft_which_output_u(flags->type, &ft_outputu);
@@ -499,7 +450,6 @@ int ft_printf(const char *s, ...)
 				ft_output(flags, va_arg(argptr, long long int));
 			}
 			i = i + ft_count_flags(s + i);
-			// printf("\ns[i] after type - [%c]\n", s[i]);
 		}
 		else if (s[i] == '%' && s[i + 1] == '%')
 		{

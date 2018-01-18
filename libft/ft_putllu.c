@@ -12,9 +12,13 @@
 
 #include "libft.h"
 
-void	ft_putllu(unsigned long long n)
+unsigned int	ft_putllu(unsigned long long n)
 {
+	unsigned int k;
+
+	k = 0;
 	if (n / 10)
-		ft_putllu(n / 10);
-	ft_putchar(n % 10 + '0');
+		k = ft_putllu(n / 10);
+	k = k + ft_putchar(n % 10 + '0');
+	return (k);
 }
