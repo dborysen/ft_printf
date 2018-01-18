@@ -20,8 +20,8 @@ int main(void)
 	// setlocale(LC_ALL, "");
 	//max -  18446744073709551615
 
-		printf("orig - [%5d]\n", 42);
-	ft_printf("mine - [%5d]\n", 42);
+	   printf("orig - [%-5.3s]\n", "LYDI");
+	ft_printf("mine - [%-5.3s]\n", "LYDI");
 
 	// ft_printf("%#x", 42);
 	// ft_printf("%ld", -2147483649);

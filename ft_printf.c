@@ -240,7 +240,20 @@ void ft_output_s(t_flags *flags, long long argptr)
 			ft_print_unicode(m[k++]);
 	}
 	else
-		ft_putstr((char*)argptr);
+	{
+		if (flags->precision != 0)
+		{
+			while (k < flags->precision)
+				ft_putchar(((char*)argptr)[k++]);
+			// ft_putstr((char*)argptr);
+		}
+		if (flags->width > ft_strlen((char*)argptr) - flags->precision)
+		{
+			while (flags->width-- > flags->precision)
+				ft_putchar(' ');
+		}
+	}
+	// printf("argptr- [%c]\n", ((char*)argptr)[0]);
 }
 
 void ft_output_c(t_flags *flags, long long argptr)
@@ -463,9 +476,7 @@ int ft_printf(const char *s, ...)
 		//	printf("tmp - str [%s]\n", tmp_str);
 			ft_is_a_flag(tmp_str, flags);
 			if (MB_CUR_MAX == 1 && flags->type == 'C')
-			{
 				flags->type = 'c';
-			}
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
