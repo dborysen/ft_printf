@@ -226,42 +226,42 @@ void ft_output_S(t_flags *flags, long long argptr)
 		ft_print_unicode(m[k++]);
 }
 
-void ft_output_s(t_flags *flags, long long argptr)
-{
-	int *m;
-	int k;
+// void ft_output_s(t_flags *flags, long long argptr)
+// {
+// 	int *m;
+// 	int k;
 
-	k = 0;
-	m = 0;
-	if (flags->size_flag == 'l')
-	{
-		m = (int*)(argptr);
-		while (m[k])
-			ft_print_unicode(m[k++]);
-	}
-	else
-	{
-		if (flags->precision != 0)
-		{
-			while (k < flags->precision)
-				ft_putchar(((char*)argptr)[k++]);
-			// ft_putstr((char*)argptr);
-		}
-		if (flags->width > ft_strlen((char*)argptr) - flags->precision)
-		{
-			while (flags->width-- > flags->precision)
-				ft_putchar(' ');
-		}
-	}
-	// printf("argptr- [%c]\n", ((char*)argptr)[0]);
-}
+// 	k = 0;
+// 	m = 0;
+// 	if (flags->size_flag == 'l')
+// 	{
+// 		m = (int*)(argptr);
+// 		while (m[k])
+// 			ft_print_unicode(m[k++]);
+// 	}
+// 	else
+// 	{
+// 		if (flags->precision != 0)
+// 		{
+// 			while (k < flags->precision)
+// 				flags->bnum += ft_putchar(((char*)argptr)[k++]);
+// 			// ft_putstr((char*)argptr);
+// 		}
+// 		if ((unsigned long)flags->width > ft_strlen((char*)argptr) - flags->precision)
+// 		{
+// 			while (flags->width-- > flags->precision)
+// 				flags->bnum += ft_putchar(' ');
+// 		}
+// 	}
+// 	// printf("argptr- [%c]\n", ((char*)argptr)[0]);
+// }
 
 void ft_output_c(t_flags *flags, long long argptr)
 {
 	if (flags->size_flag == 'l')
 		ft_print_unicode((int)argptr);
 	else
-		ft_putchar((unsigned char)(argptr));
+		flags->bnum += ft_putchar((unsigned char)(argptr));
 }
 
 void ft_output_D(t_flags *flags, long long argptr)
@@ -511,7 +511,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	// printf("flags->bnum - [%u]\n", flags->bnum);
+	printf("flags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 

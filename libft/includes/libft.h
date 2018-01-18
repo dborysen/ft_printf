@@ -80,7 +80,7 @@ void				*ft_memmove(void *dst, const void *src, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 unsigned int		ft_putchar(char c);
-void				ft_putstr(char const *s);
+int					ft_putstr(char const *s);
 void				ft_putnbr(int n);
 void				ft_strclr(char *s);
 int					ft_strequ(char const *s1, char const *s2);

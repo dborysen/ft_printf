@@ -33,6 +33,7 @@ typedef struct	s_flags
 }				t_flags;
 
 void			ft_output_d(t_flags *flags, long long argptr);
+void			ft_output_s(t_flags *flags, long long argptr);
 int				ft_count_digit(long long n);
 int				ft_printf(const char *s, ...);
 char			*ft_itoa_base_pf(unsigned long long v, int base, t_flags *flags);

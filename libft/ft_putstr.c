@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-void	ft_putstr(char const *s)
+int	ft_putstr(char const *s)
 {
 	int i;
 
@@ -22,4 +22,5 @@ void	ft_putstr(char const *s)
 		write(1, &s[i], 1);
 		i++;
 	}
+	return (i);
 }
