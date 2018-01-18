@@ -462,6 +462,10 @@ int ft_printf(const char *s, ...)
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 		//	printf("tmp - str [%s]\n", tmp_str);
 			ft_is_a_flag(tmp_str, flags);
+			if (MB_CUR_MAX == 1 && flags->type == 'C')
+			{
+				flags->type = 'c';
+			}
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
@@ -471,9 +475,7 @@ int ft_printf(const char *s, ...)
 			// printf("flags->space - [%c]\n", flags->space);
 			// printf("flags->precision - [%d]\n", flags->precision);
 			// printf("flags->width - [%d]\n", flags->width);
-
 			ft_strdel(&tmp_str);
-			// printf("MB_CUR_MAX - [%d]\n", MB_CUR_MAX);
 			// printf("arg - [%lld]\n", va_arg(argptr, long long int));
 			if (flags->type == 'u' || flags->type == 'U')
 			{
@@ -488,8 +490,6 @@ int ft_printf(const char *s, ...)
 			i = i + ft_count_flags(s + i);
 			// printf("\ns[i] after type - [%c]\n", s[i]);
 		}
-		// if (MB_CUR_MAX == 1)
-		// 	return (-1);
 		else if (s[i] == '%' && s[i + 1] == '%')
 		{
 			flags->bnum += ft_putchar(s[i]);
