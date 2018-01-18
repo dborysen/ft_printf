@@ -455,8 +455,6 @@ int ft_printf(const char *s, ...)
 	flags->width = 0;
 	flags->bnum = 0;
 	va_start(argptr, s);
-	if (MB_CUR_MAX == 1)
-		return (-1);
 	while (s[i])
 	{
 		if (s[i] == '%' && s[i + 1] != '%')
@@ -490,6 +488,8 @@ int ft_printf(const char *s, ...)
 			i = i + ft_count_flags(s + i);
 			// printf("\ns[i] after type - [%c]\n", s[i]);
 		}
+		// if (MB_CUR_MAX == 1)
+		// 	return (-1);
 		else if (s[i] == '%' && s[i + 1] == '%')
 		{
 			flags->bnum += ft_putchar(s[i]);

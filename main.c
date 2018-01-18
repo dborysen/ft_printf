@@ -16,14 +16,13 @@
 
 int main(void)
 {
-	int k;
 	char *p;
-	setlocale(LC_ALL, "");
+	// setlocale(LC_ALL, "");
 	//max -  18446744073709551615
 
-	k =  printf("orig - [%C] mamasita [%d]\n", L'狼', 42);
-	ft_printf("mine - [%C] mamasita [%d]\n", L'狼', 42);
-	// printf("orig return - [%d]\n", k);
+		printf("orig - [%5d]", 42);
+	ft_printf("mine - [%5d]", 42);
+
 	// ft_printf("%#x", 42);
 	// ft_printf("%ld", -2147483649);
 	//    printf("orig - %hhd\n", 4294967295);
