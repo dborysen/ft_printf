@@ -511,7 +511,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	printf("flags->bnum - [%u]\n", flags->bnum);
+	// printf("flags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 
