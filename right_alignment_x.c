@@ -49,7 +49,8 @@ void	right_alignment_x(t_flags *flags, char *argptr)
 	if (flags->hash == '#')
 	{
 		m = 2;
-		if (flags->precision == 0 && ((unsigned long)flags->width < ft_strlen((char*)argptr) + m))
+		if (flags->precision == 0 && ((unsigned long)flags->width 
+			< ft_strlen((char*)argptr) + m) && ft_strcmp(argptr, "0"))
 			flags->bnum += ft_putstr("0x");
 	}
 	if ((unsigned long)flags->width < ft_strlen((char*)argptr) + m)

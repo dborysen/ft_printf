@@ -396,7 +396,7 @@ int ft_printf(const char *s, ...)
 			if (flags->star == '*')
 			{
 				temp = va_arg(argptr, unsigned long long);
-				if (temp != NULL)
+				if (temp)
 					flags->width = temp;
 			}
 			if (flags->type == 'u' || flags->type == 'U')
@@ -421,7 +421,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	// printf("\nflags->bnum - [%u]\n", flags->bnum);
+	printf("\nflags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 
