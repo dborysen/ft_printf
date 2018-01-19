@@ -236,7 +236,7 @@ void ft_output_S(t_flags *flags, long long argptr)
 
 void ft_output_c(t_flags *flags, long long argptr)
 {
-	if (flags->size_flag == 'l' && MB_CUR_MAX != 1)
+	if (flags->size_flag == 'l')
 		ft_print_unicode((int)argptr);
 	else
 		flags->bnum += ft_putchar((unsigned char)(argptr));
@@ -382,6 +382,8 @@ int ft_printf(const char *s, ...)
 		{
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 			ft_is_a_flag(tmp_str, flags);
+			if (MB_CUR_MAX == 1 && flags->type == 'C')
+				flags->type = 'c';
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
