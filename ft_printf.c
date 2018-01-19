@@ -421,7 +421,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	printf("\nflags->bnum - [%u]\n", flags->bnum);
+	// printf("\nflags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 
