@@ -52,8 +52,7 @@ void	left_alignment_s(t_flags *flags, long long argptr)
 		flags->bnum += ft_putstr((char*)argptr);
 	if ((unsigned long)flags->width >
 	ft_strlen((char*)argptr) - flags->precision)
-		while ((unsigned long)flags->width-- >
-		ft_strlen((char*)argptr) - flags->precision)
+		while (flags->width-- > flags->precision)
 			flags->bnum += ft_putchar(' ');
 }
 

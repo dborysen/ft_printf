@@ -40,8 +40,6 @@ void ft_output_o(t_flags *flags, long long argptr)
 {
 	char *temp;
 
-	// if (flags->hash == '#' && argptr != 0)
-	// 	flags->bnum += ft_putchar('0');
 	if (flags->size_flag == 'H')
 		temp = ft_itoa_base((unsigned char)argptr, 8);
 	else if (flags->size_flag == 'h')

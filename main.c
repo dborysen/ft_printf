@@ -22,10 +22,10 @@ int main(void)
 	//max -  18446744073709551615
 
 	k = 0;
-	   printf("orig - [%04i]\n", 42);
-	ft_printf("mine - [%04i]\n", 42);
+	   printf("orig - [%-*.3s]\n", "LYDI");
+	ft_printf("mine - [%-*.3s]\n", "LYDI");
 
-	// ft_printf("%-#15.4x", 61);
+	// ft_printf("%-i", 42);
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);
 	// ft_printf("mamasita %p hello %% again %X %C\n", p, 61, L'🎈');
