@@ -219,7 +219,7 @@ int ft_count_digit(long long n)
 void ft_output_C(t_flags *flags, long long argptr)
 {
 	(void)flags;
-	ft_print_unicode((int)argptr);
+	ft_print_unicode((int)argptr, flags);
 }
 
 void ft_output_S(t_flags *flags, long long argptr)
@@ -231,13 +231,13 @@ void ft_output_S(t_flags *flags, long long argptr)
 	(void)flags;
 	m = (int*)(argptr);
 	while (m[k])
-		ft_print_unicode(m[k++]);
+		ft_print_unicode(m[k++], flags);
 }
 
 void ft_output_c(t_flags *flags, long long argptr)
 {
 	if (flags->size_flag == 'l')
-		ft_print_unicode((int)argptr);
+		ft_print_unicode((int)argptr, flags);
 	else
 		flags->bnum += ft_putchar((unsigned char)(argptr));
 }
@@ -384,8 +384,8 @@ int ft_printf(const char *s, ...)
 			ft_is_a_flag(tmp_str, flags);
 			if (MB_CUR_MAX == 1 && flags->type == 'C')
 				flags->type = 'c';
-			if (MB_CUR_MAX == 1 && flags->type == 'S')
-				flags->type = 's';
+			// if (MB_CUR_MAX == 1 && flags->type == 'S')
+			// 	flags->type = 's';
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
@@ -425,7 +425,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	// printf("\nflags->bnum - [%u]\n", flags->bnum);
+	printf("\nflags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 

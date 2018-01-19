@@ -39,7 +39,7 @@ void			ft_output_x(t_flags *flags, long long argptr);
 void			ft_output_o(t_flags *flags, long long argptr);
 int				ft_count_digit(long long n);
 int				ft_printf(const char *s, ...);
-char			*ft_itoa_base_pf(unsigned long long v, int base, t_flags *flags);
+void			ft_print_unicode(int n, t_flags *flags);
 void			left_alignment_d(t_flags *flags, long long argptr);
 void			right_alignment_d(t_flags *flags, long long argptr);
 void			left_alignment_u(t_flags *flags, unsigned long long argptr);

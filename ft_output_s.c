@@ -67,7 +67,7 @@ void	ft_output_s(t_flags *flags, long long argptr)
 	{
 		m = (int*)(argptr);
 		while (m[k])
-			ft_print_unicode(m[k++]);
+			ft_print_unicode(m[k++], flags);
 	}
 	if ((char*)argptr == NULL)
 	{

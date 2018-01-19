@@ -57,7 +57,7 @@ void	ft_print_unicode(int n, t_flags *flags)
 	print_bytes = NULL;
 	if (n >= 0 && n < 128)
 	{
-		ft_putchar(n);
+		flags->bnum += ft_putchar(n);
 		return ;
 	}
 	if (n >= 128 && n < 2048 && (k = 3))
@@ -68,7 +68,6 @@ void	ft_print_unicode(int n, t_flags *flags)
 		print_bytes = &print_4bytes;
 	if((str = (char*)malloc(sizeof(char) * k)))
 	{
-		printf("IM HERE\n");
 		print_bytes(n, &str);
 		flags->bnum += ft_putstr(str);
 		free(str);

@@ -14,9 +14,9 @@ NAME = libftprintf.a
 
 LIBFT = libft
 
-SRCS = right_alignment_x.c left_alignment_x.c ft_output_x.c ft_output_u.c right_alignment_u.c left_alignment_u.c right_alignment_d.c left_alignment_d.c ft_printf.c ft_output_d.c ft_output_s.c
+SRCS = ft_print_unicode.c right_alignment_x.c left_alignment_x.c ft_output_x.c ft_output_u.c right_alignment_u.c left_alignment_u.c right_alignment_d.c left_alignment_d.c ft_printf.c ft_output_d.c ft_output_s.c
 
-OBJECT = right_alignment_x.o left_alignment_x.o ft_output_x.o ft_output_u.o right_alignment_u.o left_alignment_u.o right_alignment_d.o left_alignment_d.o ft_printf.o ft_output_d.o ft_output_s.o
+OBJECT = ft_print_unicode.o right_alignment_x.o left_alignment_x.o ft_output_x.o ft_output_u.o right_alignment_u.o left_alignment_u.o right_alignment_d.o left_alignment_d.o ft_printf.o ft_output_d.o ft_output_s.o
 
 INCLUDES = ft_printf.h
 
@@ -32,7 +32,7 @@ $(NAME):
 	@ranlib $(NAME)
 
 comp:
-	@gcc main.c $(SRCS) libft/libft.a && ./a.out
+	@gcc main.c $(SRCS) libft/libft.a && ./a.out | cat -e
 
 clean:
 	@rm -f $(OBJECT)

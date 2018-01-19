@@ -112,7 +112,6 @@ int					ft_ispower(int x);
 int					ft_reverse_bits(unsigned char octet);
 char				*ft_itoa_base(unsigned long long v, int base);
 char				*ft_lowstr(char *s);
-void				ft_print_unicode(int n);
 unsigned int		ft_putlonglong(long long n);
 unsigned int		ft_putllu(unsigned long long n);
 int					get_next_line(const int fd, char **line);
