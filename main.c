@@ -22,8 +22,8 @@ int main(void)
 	//max -  18446744073709551615
 
 	k = 0;
-	   printf("orig - [%#o]\n", 0);
-	ft_printf("mine - [%#o]\n", 0);
+	   printf("orig - [%#o]\n", 2147483647);
+	ft_printf("mine - [%#o]\n", 2147483647);
 
 	// ft_printf("%-i", 42);
 	//    printf("orig - %hhd\n", 4294967295);

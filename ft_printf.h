@@ -46,5 +46,7 @@ void			left_alignment_u(t_flags *flags, unsigned long long argptr);
 void			right_alignment_u(t_flags *flags, unsigned long long argptr);
 void			left_alignment_x(t_flags *flags, char *argptr);
 void			right_alignment_x(t_flags *flags, char* argptr);
+void			left_alignment_o(t_flags *flags, char *argptr);
+void			right_alignment_o(t_flags *flags, char *argptr);
 
 #endif

@@ -54,8 +54,8 @@ void ft_output_o(t_flags *flags, long long argptr)
 	else
 		temp = ft_itoa_base((unsigned int)argptr, 8);
 	if (flags->minus == '-' && (size_t)flags->width >= ft_strlen(temp))
-		left_alignment_x(flags, temp);
+		left_alignment_o(flags, temp);
 	else
-		right_alignment_x(flags, temp);
+		right_alignment_o(flags, temp);
 	ft_strdel(&temp);
 }
