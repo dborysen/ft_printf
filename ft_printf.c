@@ -161,6 +161,12 @@ void ft_precision_search(char *s, t_flags *flags)
 	ft_strdel(&t);
 }
 
+// void ft_star_search(char *s, t_flags *flags)
+// {
+
+
+// }
+
 void ft_is_a_flag(char *s, t_flags *flags)
 {
 	int i;
@@ -176,6 +182,8 @@ void ft_is_a_flag(char *s, t_flags *flags)
 		flags->hash = '#';
 	if (ft_strchr(s, ' '))
 		flags->space = ' ';
+	if (ft_strchr(s, '*'))
+		flags->star = '*';
 	flags->type = ft_corrent_type(s);
 	if (ft_strchr(s, '.'))
 		ft_precision_search(s, flags);
@@ -240,29 +248,29 @@ void ft_output_D(t_flags *flags, long long argptr)
 	ft_putlonglong(argptr);
 }
 
-void ft_output_o(t_flags *flags, long long argptr)
-{
-	char *temp;
+// void ft_output_o(t_flags *flags, long long argptr)
+// {
+// 	char *temp;
 
-	if (flags->hash == '#' && argptr != 0)
-		flags->bnum += ft_putchar('0');
-	if (flags->size_flag == 'H')
-		temp = ft_itoa_base_pf((unsigned char)argptr, 8, flags);
-	else if (flags->size_flag == 'h')
-		temp = ft_itoa_base_pf((unsigned short int)argptr, 8, flags);
-	else if (flags->size_flag == 'z')
-		temp = ft_itoa_base_pf((size_t)argptr, 8, flags);
-	else if (flags->size_flag == 'l')
-		temp = ft_itoa_base_pf((unsigned long)argptr, 8, flags);
-	else if (flags->size_flag == 'L')
-		temp = ft_itoa_base_pf((unsigned long long)argptr, 8, flags);
-	else if (flags->size_flag == 'j')
-		temp = ft_itoa_base_pf((uintmax_t)argptr, 8, flags);
-	else
-		temp = ft_itoa_base_pf((unsigned int)argptr, 8, flags);
-	flags->bnum += ft_putstr(temp);
-	ft_strdel(&temp);
-}
+// 	if (flags->hash == '#' && argptr != 0)
+// 		flags->bnum += ft_putchar('0');
+// 	if (flags->size_flag == 'H')
+// 		temp = ft_itoa_base((unsigned char)argptr, 8);
+// 	else if (flags->size_flag == 'h')
+// 		temp = ft_itoa_base((unsigned short int)argptr, 8);
+// 	else if (flags->size_flag == 'z')
+// 		temp = ft_itoa_base((size_t)argptr, 8);
+// 	else if (flags->size_flag == 'l')
+// 		temp = ft_itoa_base((unsigned long)argptr, 8);
+// 	else if (flags->size_flag == 'L')
+// 		temp = ft_itoa_base((unsigned long long)argptr, 8);
+// 	else if (flags->size_flag == 'j')
+// 		temp = ft_itoa_base((uintmax_t)argptr, 8);
+// 	else
+// 		temp = ft_itoa_base((unsigned int)argptr, 8);
+// 	flags->bnum += ft_putstr(temp);
+// 	ft_strdel(&temp);
+// }
 
 void ft_output_O(t_flags *flags, long long argptr)
 {
@@ -274,36 +282,36 @@ void ft_output_O(t_flags *flags, long long argptr)
 		ft_putchar('0');
 		flags->bnum++;
 	}
-	temp = ft_itoa_base_pf((unsigned long)argptr, 8, flags);
+	temp = ft_itoa_base((unsigned long)argptr, 8);
 	ft_putstr(temp);
 	ft_strdel(&temp);
 }
 
-void ft_output_x(t_flags *flags, long long argptr)
-{
-	char *temp;
-	if (flags->hash == '#')
-	{
-		ft_putstr("0x");
-		flags->bnum = flags->bnum + 2;
-	}
-	if (flags->size_flag == 'H')
-		temp = ft_lowstr(ft_itoa_base_pf((unsigned char)argptr, 16, flags));
-	else if (flags->size_flag == 'h')
-		temp = ft_lowstr(ft_itoa_base_pf((unsigned short int)argptr, 16, flags));
-	else if (flags->size_flag == 'z')
-		temp = ft_lowstr(ft_itoa_base_pf((size_t)argptr, 16, flags));
-	else if (flags->size_flag == 'j')
-		temp = ft_lowstr(ft_itoa_base_pf((uintmax_t)argptr, 16, flags));
-	else if (flags->size_flag == 'l')
-		temp = ft_lowstr(ft_itoa_base_pf((unsigned long)argptr, 16, flags));
-	else if (flags->size_flag == 'L')
-		temp = ft_lowstr(ft_itoa_base_pf((unsigned long long)argptr, 16, flags));
-	else 
-		temp = ft_lowstr(ft_itoa_base_pf((unsigned int)argptr, 16, flags));
-	ft_putstr(temp);
-	ft_strdel(&temp);
-}
+// void ft_output_x(t_flags *flags, long long argptr)
+// {
+// 	char *temp;
+// 	if (flags->hash == '#')
+// 	{
+// 		ft_putstr("0x");
+// 		flags->bnum = flags->bnum + 2;
+// 	}
+// 	if (flags->size_flag == 'H')
+// 		temp = ft_lowstr(ft_itoa_base((unsigned char)argptr, 16));
+// 	else if (flags->size_flag == 'h')
+// 		temp = ft_lowstr(ft_itoa_base((unsigned short int)argptr, 16));
+// 	else if (flags->size_flag == 'z')
+// 		temp = ft_lowstr(ft_itoa_base((size_t)argptr, 16));
+// 	else if (flags->size_flag == 'j')
+// 		temp = ft_lowstr(ft_itoa_base((uintmax_t)argptr, 16));
+// 	else if (flags->size_flag == 'l')
+// 		temp = ft_lowstr(ft_itoa_base((unsigned long)argptr, 16));
+// 	else if (flags->size_flag == 'L')
+// 		temp = ft_lowstr(ft_itoa_base((unsigned long long)argptr, 16));
+// 	else 
+// 		temp = ft_lowstr(ft_itoa_base((unsigned int)argptr, 16));
+// 	flags->bnum += ft_putstr(temp);
+// 	ft_strdel(&temp);
+// }
 
 void ft_output_X(t_flags *flags, long long argptr)
 {
@@ -315,20 +323,20 @@ void ft_output_X(t_flags *flags, long long argptr)
 		flags->bnum = flags->bnum + 2;
 	}
 	if (flags->size_flag == 'H')
-		temp = ft_itoa_base_pf((unsigned char)argptr, 16, flags);
+		temp = ft_itoa_base((unsigned char)argptr, 16);
 	else if (flags->size_flag == 'h')
-		temp = ft_itoa_base_pf((unsigned short int)argptr, 16, flags);
+		temp = ft_itoa_base((unsigned short int)argptr, 16);
 	else if (flags->size_flag == 'z')
-		temp = ft_itoa_base_pf((size_t)argptr, 16, flags);
+		temp = ft_itoa_base((size_t)argptr, 16);
 	else if (flags->size_flag == 'j')
-		temp = ft_itoa_base_pf((uintmax_t)argptr, 16, flags);
+		temp = ft_itoa_base((uintmax_t)argptr, 16);
 	else if (flags->size_flag == 'l')
-		temp = ft_itoa_base_pf((unsigned long)argptr, 16, flags);
+		temp = ft_itoa_base((unsigned long)argptr, 16);
 	else if (flags->size_flag == 'L')
-		temp = ft_itoa_base_pf((unsigned long long)argptr, 16, flags);
+		temp = ft_itoa_base((unsigned long long)argptr, 16);
 	else 
-		temp = ft_itoa_base_pf((unsigned int)argptr, 16, flags);
-	ft_putstr(temp);
+		temp = ft_itoa_base((unsigned int)argptr, 16);
+	flags->bnum += ft_putstr(temp);
 	ft_strdel(&temp);
 }
 
@@ -352,9 +360,9 @@ void ft_output_p(t_flags *flags, long long argptr)
 
 	(void)flags;
 	flags->bnum = flags->bnum + 2;
-	temp = ft_lowstr(ft_itoa_base_pf(argptr, 16, flags));
+	temp = ft_lowstr(ft_itoa_base(argptr, 16));
 	ft_putstr("0x");
-	ft_putstr(temp);
+	flags->bnum += ft_putstr(temp);
 	ft_strdel(&temp);
 }
 
@@ -423,15 +431,18 @@ int ft_printf(const char *s, ...)
 		{
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 			ft_is_a_flag(tmp_str, flags);
-			if (MB_CUR_MAX == 1 && (flags->type == 'C' || 
-				(flags->type == 'c' && flags->size_flag == 'l')))
-			{
-				flags->type = 'c';
-				flags->size_flag = 0;
-			}
+			// if (MB_CUR_MAX == 1)
+			// {
+			// 	if (flags->type == 'C' || 
+			// 	(flags->type == 'c' && flags->size_flag == 'l'))
+			// 	{
+			// 		flags->type = 'c';
+			// 		flags->size_flag = 0;
+			// 	}
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
 			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
+			// printf("flags->star - [%c]\n", flags->star);
 			// printf("flags->minus - [%c]\n", flags->minus);
 			// printf("flags->zero - [%c]\n", flags->zero);
 			// printf("flags->hash - [%c]\n", flags->hash);
@@ -439,6 +450,8 @@ int ft_printf(const char *s, ...)
 			// printf("flags->precision - [%d]\n", flags->precision);
 			// printf("flags->width - [%d]\n", flags->width);
 			ft_strdel(&tmp_str);
+			if (flags->star == '*')
+				flags->width = va_arg(argptr, unsigned long long);
 			if (flags->type == 'u' || flags->type == 'U')
 			{
 				ft_which_output_u(flags->type, &ft_outputu);
@@ -461,7 +474,7 @@ int ft_printf(const char *s, ...)
 	}
 	va_end(argptr);
 	free(flags);
-	// printf("flags->bnum - [%u]\n", flags->bnum);
+	// printf("\nflags->bnum - [%u]\n", flags->bnum);
 	return (flags->bnum);
 }
 

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int count_dig(int n, int base)
 {
@@ -49,7 +48,7 @@ char	*ft_itoa_base_pf(unsigned long long v, int base, t_flags *flags)
 	(v < 10) ? result[i++] = (v % base + 48) :
 	(result[i++] = baseline[v]);
 	result[i] = '\0';
-	flags->bnum = flags->bnum + ft_strlen(result);
+	// flags->bnum = flags->bnum + ft_strlen(result);
 	ft_reverse(result);
 	free(baseline);
 	return (result);

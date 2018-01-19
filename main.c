@@ -17,18 +17,19 @@
 int main(void)
 {
 	char *p;
+	int k;
 	// setlocale(LC_ALL, "");
 	//max -  18446744073709551615
 
-	   printf("orig - [% %]\n");   // printf("orig - [%hU]\n", 4294967296);
-	ft_printf("mine - [% %]\n");
+	k = 0;
+	   printf("orig - [%#8x]\n", 42);
+	ft_printf("mine - [%#8x]\n", 42);
 
-	// ft_printf("%-d", 42);
-	// ft_printf("%ld", -2147483649);
+	// ft_printf("%-#15.4x", 61);
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);
-	// ft_printf("mamasita %p hello %% again %X %S\n", p, 61, L"🎈");
-	//    printf("mamasita %p hello %% again %X %S\n", p, 61, L"🎈");
+	// ft_printf("mamasita %p hello %% again %X %C\n", p, 61, L'🎈');
+	//    printf("mamasita %p hello %% again %X %C\n", p, 61, L'🎈');
 	// ft_printf("%X %x %% %o %s %p\n", 61, 61, 61, "hello", &p);
 	//    printf("%X %x %% %o %s %p\n", 61, 61, 61, "hello", &p);
 	//    printf("%D %U %o %O\n", 8422, 61, 9223372036854775807, 9223372036854775807);

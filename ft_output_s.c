@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-// #include <stdio.h>
 
 void	right_alignment_s(t_flags *flags, long long argptr)
 {

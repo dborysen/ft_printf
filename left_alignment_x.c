@@ -1,56 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   left_alignment_u.c                                 :+:      :+:    :+:   */
+/*   left_alignment_x.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dborysen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/18 15:16:50 by dborysen          #+#    #+#             */
-/*   Updated: 2018/01/18 15:16:51 by dborysen         ###   ########.fr       */
+/*   Created: 2018/01/19 11:14:26 by dborysen          #+#    #+#             */
+/*   Updated: 2018/01/19 11:14:27 by dborysen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	precision_part_u(t_flags *flags, unsigned long long argptr, int n)
+void	precision_part_x(t_flags *flags, char *argptr, int n)
 {
 	int zero_num;
+	int m;
 
-	zero_num = flags->precision - ft_count_digit_u(argptr);
-	if (flags->plus == '+')
-		flags->bnum += ft_putchar('+');
-	else if (flags->space == ' ')
-		flags->bnum += ft_putchar(' ');
+	m = 0;
+	if (flags->hash == '#')
+	{
+		m = 2;
+		flags->bnum += ft_putstr("0x");
+	}
+	zero_num = flags->precision - ft_strlen((char*)argptr);
 	while (n++ < zero_num)
 		flags->bnum += ft_putchar('0');
-	flags->bnum += ft_putllu(argptr);
+	flags->bnum += ft_putstr(argptr);
 	n = 0;
 	if (flags->width > flags->precision)
 	{
 		if (flags->plus == '+' || flags->space == ' ')
 			n++;
-		while (n++ < (flags->width - flags->precision))
+		while (n++ < (flags->width - flags->precision - m))
 			flags->bnum += ft_putchar(' ');
 	}
 }
 
-void	left_alignment_u(t_flags *flags, unsigned long long argptr)
+void	left_alignment_x(t_flags *flags, char *argptr)
 {
 	int n;
+	int m;
 
 	n = 0;
+	m = 0;
+	if (flags->hash == '#')
+		m = 2;
 	if (flags->precision != 0)
-		precision_part_u(flags, argptr, n);
+		precision_part_x(flags, argptr, n);
 	else
 	{
 		if (flags->plus == '+' || flags->space == ' ')
 			flags->width = flags->width - 1;
-		if (flags->plus == '+')
-			flags->bnum += ft_putchar('+');
-		else if (flags->space == ' ')
-			flags->bnum += ft_putchar(' ');
-		flags->bnum += ft_putllu(argptr);
-		while (n++ < (flags->width - ft_count_digit_u(argptr)))
+		if (flags->hash == '#')
+			flags->bnum += ft_putstr("0x");
+		flags->bnum += ft_putstr(argptr);
+		while ((unsigned long)n++ < (flags->width -
+		ft_strlen((char*)argptr)) - m)
 			flags->bnum += ft_putchar(' ');
 	}
 }
