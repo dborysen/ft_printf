@@ -12,9 +12,10 @@
 
 #include "ft_printf.h"
 
-void ft_output_x(t_flags *flags, long long argptr)
+void	ft_output_x(t_flags *flags, long long argptr)
 {
 	char *temp;
+
 	if (flags->size_flag == 'H')
 		temp = ft_lowstr(ft_itoa_base((unsigned char)argptr, 16));
 	else if (flags->size_flag == 'h')
@@ -27,7 +28,7 @@ void ft_output_x(t_flags *flags, long long argptr)
 		temp = ft_lowstr(ft_itoa_base((unsigned long)argptr, 16));
 	else if (flags->size_flag == 'L')
 		temp = ft_lowstr(ft_itoa_base((unsigned long long)argptr, 16));
-	else 
+	else
 		temp = ft_lowstr(ft_itoa_base((unsigned int)argptr, 16));
 	if (flags->minus == '-' && (size_t)flags->width >= ft_strlen(temp))
 		left_alignment_x(flags, temp);
@@ -36,9 +37,10 @@ void ft_output_x(t_flags *flags, long long argptr)
 	ft_strdel(&temp);
 }
 
-void ft_output_o(t_flags *flags, long long argptr)
+void	ft_output_o(t_flags *flags, long long argptr)
 {
 	char *temp;
+
 	if (flags->size_flag == 'H')
 		temp = ft_itoa_base((unsigned char)argptr, 8);
 	else if (flags->size_flag == 'h')

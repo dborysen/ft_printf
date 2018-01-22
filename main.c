@@ -14,6 +14,7 @@
 #include <locale.h>
 #include <stdio.h>
 
+
 int main(void)
 {
 	char *p;
@@ -22,10 +23,8 @@ int main(void)
 	//max -  18446744073709551615
 
 	k = 0;
-	   k = printf("orig - [%S]\n", L"@@");
-	ft_printf("mine - [%S]\n", L"@@");
-	printf("k - [%d]\n", k);
-	// ft_printf("%-i", 42);
+	   // printf("orig - [%d]\n", 123);
+	ft_printf("mine - [%a]\n", 12);
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);
 	// ft_printf("mamasita %p hello %% again %X %C\n", p, 61, L'🎈');

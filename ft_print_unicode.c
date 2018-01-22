@@ -48,8 +48,8 @@ void	print_4bytes(int n, char **line)
 void	ft_print_unicode(int n, t_flags *flags)
 {
 	char	*str;
-	int 	k;
-	char 	v;
+	int		k;
+	char	v;
 	void	(*print_bytes)(int, char **);
 
 	k = 0;
@@ -66,7 +66,7 @@ void	ft_print_unicode(int n, t_flags *flags)
 		print_bytes = &print_3bytes;
 	else if (n >= 32768 && n < 524288 && (k = 5))
 		print_bytes = &print_4bytes;
-	if((str = (char*)malloc(sizeof(char) * k)))
+	if ((str = (char*)malloc(sizeof(char) * k)))
 	{
 		print_bytes(n, &str);
 		flags->bnum += ft_putstr(str);

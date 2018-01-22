@@ -15,13 +15,14 @@
 void	ft_output_u(t_flags *flags, unsigned long long argptr)
 {
 	if (flags->size_flag == 'H')
-		(flags->minus == '-') ? left_alignment_u(flags, (unsigned char)argptr) : 
-		right_alignment_u(flags, (unsigned char)argptr);
+		(flags->minus == '-') ? left_alignment_u(flags, (unsigned char)argptr)
+		: right_alignment_u(flags, (unsigned char)argptr);
 	else if (flags->size_flag == 'h')
-		(flags->minus == '-') ? left_alignment_u(flags, (unsigned short int)argptr) :
-		right_alignment_u(flags, (unsigned short int)argptr);
+		(flags->minus == '-') ? left_alignment_u(flags,
+		(unsigned short int)argptr) : right_alignment_u(flags,
+		(unsigned short int)argptr);
 	else if (flags->size_flag == 'j')
-		(flags->minus == '-') ?	left_alignment_u(flags, (uintmax_t)argptr) :
+		(flags->minus == '-') ? left_alignment_u(flags, (uintmax_t)argptr) :
 		right_alignment_u(flags, (uintmax_t)argptr);
 	else if (flags->size_flag == 'l')
 		(flags->minus == '-') ? left_alignment_u(flags, (unsigned long)argptr) :
@@ -33,6 +34,6 @@ void	ft_output_u(t_flags *flags, unsigned long long argptr)
 		(flags->minus == '-') ? left_alignment_u(flags, argptr) :
 		right_alignment_u(flags, argptr);
 	else
-		(flags->minus == '-') ? left_alignment_u(flags, (unsigned int)argptr) : 
+		(flags->minus == '-') ? left_alignment_u(flags, (unsigned int)argptr) :
 		right_alignment_u(flags, (unsigned int)argptr);
 }
