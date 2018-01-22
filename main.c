@@ -23,8 +23,8 @@ int main(void)
 	//max -  18446744073709551615
 
 	k = 0;
-	   // printf("orig - [%   lll%]\n", 123);
-	ft_printf("mine - [%d]\n", 123);
+	   // printf("orig - [%p]\n", k);
+	ft_printf("mine - [%p]\n", p);
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);
 	// ft_printf("mamasita %p hello %% again %X %C\n", p, 61, L'🎈');

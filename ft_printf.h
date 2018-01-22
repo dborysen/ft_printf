@@ -32,12 +32,26 @@ typedef struct	s_flags
 	int		bnum;
 }				t_flags;
 
+void			ft_output_obig(t_flags *flags, long long argptr);
+void			ft_output_xbig(t_flags *flags, long long argptr);
+void			ft_output_ubig(t_flags *flags, unsigned long long argptr);
+void			ft_output_p(t_flags *flags, long long argptr);
+
+void			ft_output_b(t_flags *flags, unsigned long long argptr);
+void			ft_output_cbig(t_flags *flags, long long argptr);
+void			ft_output_sbig(t_flags *flags, long long argptr);
+void			ft_output_c(t_flags *flags, long long argptr);
+void			ft_output_dbig(t_flags *flags, long long argptr);
+void			ft_zero_search(char *s, t_flags *flags);
+void			ft_width_search(char *s, t_flags *flags);
+void			ft_precision_search(char *s, t_flags *flags);
+void			ft_is_a_flag(char *s, t_flags *flags);
+int				ft_count_digit(long long n);
 int				ft_char_place(char *str, char c);
 size_t			ft_count_flags(const char *s);
 char			ft_corrent_type(const char *s);
 char			ft_priority_flag(char *s);
 char			ft_char_priority_flag(char *s);
-
 void			ft_output_d(t_flags *flags, long long argptr);
 void			ft_output_s(t_flags *flags, long long argptr);
 void			ft_output_u(t_flags *flags, unsigned long long argptr);
