@@ -76,6 +76,16 @@ int		ft_printf(const char *s, ...)
 				return (-1);
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 			ft_is_a_flag(tmp_str, flags);
+			// printf("flags->size_flag - [%c]\n", flags->size_flag);
+			// printf("flags->type - [%c]\n", flags->type);
+			// printf("flags->plus - [%c]\n", flags->plus);
+			// printf("flags->star - [%c]\n", flags->star);
+			// printf("flags->minus - [%c]\n", flags->minus);
+			// printf("flags->zero - [%c]\n", flags->zero);
+			// printf("flags->hash - [%c]\n", flags->hash);
+			// printf("flags->space - [%c]\n", flags->space);
+			// printf("flags->precision - [%d]\n", flags->precision);
+			// printf("flags->width - [%d]\n", flags->width);
 			if (MB_CUR_MAX == 1 && flags->type == 'C')
 				flags->type = 'c';
 			ft_strdel(&tmp_str);

@@ -36,7 +36,6 @@ void			ft_output_obig(t_flags *flags, long long argptr);
 void			ft_output_xbig(t_flags *flags, long long argptr);
 void			ft_output_ubig(t_flags *flags, unsigned long long argptr);
 void			ft_output_p(t_flags *flags, long long argptr);
-
 void			ft_output_b(t_flags *flags, unsigned long long argptr);
 void			ft_output_cbig(t_flags *flags, long long argptr);
 void			ft_output_sbig(t_flags *flags, long long argptr);

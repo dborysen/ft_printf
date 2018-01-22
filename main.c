@@ -19,12 +19,12 @@ int main(void)
 {
 	char *p;
 	int k;
-	// setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
 	//max -  18446744073709551615
 
 	k = 0;
-	   // printf("orig - [%p]\n", k);
-	ft_printf("mine - [%p]\n", p);
+	   printf("orig - [%ls]\n", L"hello");
+	ft_printf("mine - [%ls]\n", L"hello");
 	//    printf("orig - %hhd\n", 4294967295);
 	// ft_printf("mine - %hhd\n", 4294967295);
 	// ft_printf("mamasita %p hello %% again %X %C\n", p, 61, L'🎈');

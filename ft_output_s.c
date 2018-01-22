@@ -65,9 +65,8 @@ void	ft_output_s(t_flags *flags, long long argptr)
 	m = 0;
 	if (flags->size_flag == 'l')
 	{
-		m = (int*)(argptr);
-		while (m[k])
-			ft_print_unicode(m[k++], flags);
+		ft_output_sbig(flags, argptr);
+		return ;
 	}
 	if ((char*)argptr == NULL)
 	{

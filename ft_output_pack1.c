@@ -36,7 +36,10 @@ void	ft_output_sbig(t_flags *flags, long long argptr)
 	(void)flags;
 	m = (int*)(argptr);
 	while (m[k])
-		ft_print_unicode(m[k++], flags);
+	{
+		ft_print_unicode(m[k], flags);
+		k++;
+	}
 }
 
 void	ft_output_c(t_flags *flags, long long argptr)
