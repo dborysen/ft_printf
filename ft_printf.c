@@ -35,12 +35,17 @@ size_t ft_count_flags(const char *s)
 	while (s[i] != 's' && s[i] != 'S' && s[i] != 'p' && s[i] != 'd' && 
 		s[i] != 'D' && s[i] != 'i' && s[i] != 'o' && s[i] != 'O' && 
 		s[i] != 'u' && s[i] != 'U' && s[i] != 'x' && s[i] != 'X' && 
-		s[i] != 'c' && s[i] != 'C' && s[i] != 'b')
+		s[i] != 'c' && s[i] != 'C' && s[i] != 'b' && s[i])
 		i++;
-	if (s[i])
-		return(i + 1);
-	else
-		return(0);
+	if (s[i] == '\0')
+	{
+		// printf("IM HERE\n");
+		return (0);
+	}
+	// printf("corrent char - [%c]\n", s[i]);
+	// printf("len - [%d]\n", ft_strlen(s));
+	// printf("count flags - [%zu]\n", i);
+	return(i + 1);
 }
 
 char ft_corrent_type(const char *s)
@@ -51,13 +56,21 @@ char ft_corrent_type(const char *s)
 	while (s[i] != 's' && s[i] != 'S' && s[i] != 'p' && s[i] != 'd' && 
 		s[i] != 'D' && s[i] != 'i' && s[i] != 'o' && s[i] != 'O' && 
 		s[i] != 'u' && s[i] != 'U' && s[i] != 'x' && s[i] != 'X' && 
-		s[i] != 'c' && s[i] != 'C' && s[i] != 'b')
+		s[i] != 'c' && s[i] != 'C' && s[i] != 'b' && s[i])
 		i++;
-	if (s[i])
+	// printf("ft_corrent_type - [%c]\n", s[i]);
 		return(s[i]);
-	else
-		return(0);
 }
+
+// int ft_is_a_type(const char *s)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (s[i] != '%' && s[i])
+// 		i++;
+
+// }
 
 char ft_priority_flag(char *s)
 {
@@ -391,14 +404,21 @@ int ft_printf(const char *s, ...)
 	{
 		if (s[i] == '%' && s[i + 1] != '%')
 		{
+			if (ft_count_flags(s + i) == 0)
+				return (-1);
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 			ft_is_a_flag(tmp_str, flags);
+			// printf("IM HERE\n");
+			// if (flags->type == 0)
+			// {
+			// 	return (-1);
+			// }
 			if (MB_CUR_MAX == 1 && flags->type == 'C')
 				flags->type = 'c';
 			// if (MB_CUR_MAX == 1 && flags->type == 'S')
 			// 	flags->type = 's';
 			// printf("flags->size_flag - [%c]\n", flags->size_flag);
-			printf("flags->type - [%c]\n", flags->type);
+			// printf("flags->type - [%c]\n", flags->type);
 			// printf("flags->plus - [%c]\n", flags->plus);
 			// printf("flags->star - [%c]\n", flags->star);
 			// printf("flags->minus - [%c]\n", flags->minus);
@@ -407,7 +427,7 @@ int ft_printf(const char *s, ...)
 			// printf("flags->space - [%c]\n", flags->space);
 			// printf("flags->precision - [%d]\n", flags->precision);
 			// printf("flags->width - [%d]\n", flags->width);
-			ft_strdel(&tmp_str);
+			 ft_strdel(&tmp_str);
 			if (flags->star == '*')
 			{
 				temp = va_arg(argptr, unsigned long long);
