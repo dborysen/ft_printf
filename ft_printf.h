@@ -32,6 +32,12 @@ typedef struct	s_flags
 	int		bnum;
 }				t_flags;
 
+int				ft_char_place(char *str, char c);
+size_t			ft_count_flags(const char *s);
+char			ft_corrent_type(const char *s);
+char			ft_priority_flag(char *s);
+char			ft_char_priority_flag(char *s);
+
 void			ft_output_d(t_flags *flags, long long argptr);
 void			ft_output_s(t_flags *flags, long long argptr);
 void			ft_output_u(t_flags *flags, unsigned long long argptr);

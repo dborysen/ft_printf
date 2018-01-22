@@ -13,99 +13,82 @@
 #include <stdio.h>
 #include "ft_printf.h"
 
-int	ft_char_place(char *str, char c)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-size_t ft_count_flags(const char *s)
-{
-	size_t i;
-
-	i = 0;
-	while (s[i] != 's' && s[i] != 'S' && s[i] != 'p' && s[i] != 'd' && 
-		s[i] != 'D' && s[i] != 'i' && s[i] != 'o' && s[i] != 'O' && 
-		s[i] != 'u' && s[i] != 'U' && s[i] != 'x' && s[i] != 'X' && 
-		s[i] != 'c' && s[i] != 'C' && s[i] != 'b' && s[i])
-		i++;
-	if (s[i] == '\0')
-	{
-		// printf("IM HERE\n");
-		return (0);
-	}
-	// printf("corrent char - [%c]\n", s[i]);
-	// printf("len - [%d]\n", ft_strlen(s));
-	// printf("count flags - [%zu]\n", i);
-	return(i + 1);
-}
-
-char ft_corrent_type(const char *s)
-{
-	size_t i;
-
-	i = 0;
-	while (s[i] != 's' && s[i] != 'S' && s[i] != 'p' && s[i] != 'd' && 
-		s[i] != 'D' && s[i] != 'i' && s[i] != 'o' && s[i] != 'O' && 
-		s[i] != 'u' && s[i] != 'U' && s[i] != 'x' && s[i] != 'X' && 
-		s[i] != 'c' && s[i] != 'C' && s[i] != 'b' && s[i])
-		i++;
-	// printf("ft_corrent_type - [%c]\n", s[i]);
-		return(s[i]);
-}
-
-// int ft_is_a_type(const char *s)
+// int	ft_char_place(char *str, char c)
 // {
 // 	int i;
 
 // 	i = 0;
-// 	while (s[i] != '%' && s[i])
+// 	while (str[i])
+// 	{
+// 		if (str[i] == c)
+// 			return (i);
 // 		i++;
-
+// 	}
+// 	return (0);
 // }
 
-char ft_priority_flag(char *s)
-{
-	if (ft_strchr(s, 'z'))
-		return ('z');
-	else if (ft_strchr(s, 'j'))
-		return ('j');
-	else if (ft_strstr(s, "ll"))
-		return ('L');
-	else if (ft_strchr(s, 'l'))
-		return ('l');
-	else if (ft_strstr(s, "hh"))
-		return ('H');
-	else if (ft_strchr(s, 'h'))
-		return ('h');
-	return (0);
-}
+// size_t ft_count_flags(const char *s)
+// {
+// 	size_t i;
 
-char ft_char_priority_flag(char *s)
-{
-	int i;
-	int count;
+// 	i = 0;
+// 	while (s[i] != 's' && s[i] != 'S' && s[i] != 'p' && s[i] != 'd' && 
+// 		s[i] != 'D' && s[i] != 'i' && s[i] != 'o' && s[i] != 'O' && 
+// 		s[i] != 'u' && s[i] != 'U' && s[i] != 'x' && s[i] != 'X' && 
+// 		s[i] != 'c' && s[i] != 'C' && s[i] != 'b' && s[i])
+// 		i++;
+// 	if (s[i] == '\0')
+// 		return (0);
+// 	return(i + 1);
+// }
 
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if(s[i] == 'l')
-			count++;
-		i++;
-	}
-	if (count % 2 != 0)
-		return ('l');
-	return (0);
-}
+// char ft_corrent_type(const char *s)
+// {
+// 	size_t i;
+
+// 	i = 0;
+// 	while (s[i] != 's' && s[i] != 'S' && s[i] != 'p' && s[i] != 'd' && 
+// 		s[i] != 'D' && s[i] != 'i' && s[i] != 'o' && s[i] != 'O' && 
+// 		s[i] != 'u' && s[i] != 'U' && s[i] != 'x' && s[i] != 'X' && 
+// 		s[i] != 'c' && s[i] != 'C' && s[i] != 'b' && s[i])
+// 		i++;
+// 		return(s[i]);
+// }
+
+// char ft_priority_flag(char *s)
+// {
+// 	if (ft_strchr(s, 'z'))
+// 		return ('z');
+// 	else if (ft_strchr(s, 'j'))
+// 		return ('j');
+// 	else if (ft_strstr(s, "ll"))
+// 		return ('L');
+// 	else if (ft_strchr(s, 'l'))
+// 		return ('l');
+// 	else if (ft_strstr(s, "hh"))
+// 		return ('H');
+// 	else if (ft_strchr(s, 'h'))
+// 		return ('h');
+// 	return (0);
+// }
+
+// char ft_char_priority_flag(char *s)
+// {
+// 	int i;
+// 	int count;
+
+// 	i = 0;
+// 	count = 0;
+// 	while (s[i])
+// 	{
+// 		if(s[i] == 'l')
+// 			count++;
+// 		i++;
+// 	}
+// 	if (count % 2 != 0)
+// 		return ('l');
+// 	return (0);
+// }
 
 void ft_zero_search(char *s, t_flags *flags)
 {
@@ -408,11 +391,6 @@ int ft_printf(const char *s, ...)
 				return (-1);
 			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
 			ft_is_a_flag(tmp_str, flags);
-			// printf("IM HERE\n");
-			// if (flags->type == 0)
-			// {
-			// 	return (-1);
-			// }
 			if (MB_CUR_MAX == 1 && flags->type == 'C')
 				flags->type = 'c';
 			// if (MB_CUR_MAX == 1 && flags->type == 'S')
