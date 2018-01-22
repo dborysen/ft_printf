@@ -32,6 +32,15 @@ typedef struct	s_flags
 	int		bnum;
 }				t_flags;
 
+typedef struct	s_phelp
+{
+	int		i;
+	int		temp;
+	char	*tmp_str;
+	void	(*ft_output)(t_flags*, long long);
+	void	(*ft_outputu)(t_flags*, unsigned long long);
+}				t_phelp;
+
 void			ft_output_obig(t_flags *flags, long long argptr);
 void			ft_output_xbig(t_flags *flags, long long argptr);
 void			ft_output_ubig(t_flags *flags, unsigned long long argptr);
@@ -64,7 +73,7 @@ void			right_alignment_d(t_flags *flags, long long argptr);
 void			left_alignment_u(t_flags *flags, unsigned long long argptr);
 void			right_alignment_u(t_flags *flags, unsigned long long argptr);
 void			left_alignment_x(t_flags *flags, char *argptr);
-void			right_alignment_x(t_flags *flags, char* argptr);
+void			right_alignment_x(t_flags *flags, char *argptr);
 void			left_alignment_o(t_flags *flags, char *argptr);
 void			right_alignment_o(t_flags *flags, char *argptr);
 

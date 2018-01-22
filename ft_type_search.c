@@ -64,10 +64,10 @@ char	ft_priority_flag(char *s)
 		return ('L');
 	else if (ft_strchr(s, 'l'))
 		return ('l');
-	else if (ft_strstr(s, "hh"))
-		return ('H');
 	else if (ft_strchr(s, 'h'))
 		return ('h');
+	else if (ft_strstr(s, "hh"))
+		return ('H');
 	return (0);
 }
 

@@ -50,72 +50,65 @@ void	ft_which_output_u(char type, void (**ft_outputu)
 		*ft_outputu = &ft_output_b;
 }
 
+
+
 int		ft_printf(const char *s, ...)
 {
-	int		i;
-	int		ret;
-	int		temp;
-	char	*tmp_str;
-	void	(*ft_output)(t_flags*, long long);
-	void	(*ft_outputu)(t_flags*, unsigned long long);
+	t_phelp *help;
 	t_flags	*flags;
 	va_list	argptr;
 
-	i = 0;
-	ret = 0;
+	help = (t_phelp*)malloc(sizeof(t_phelp));
 	flags = (t_flags*)malloc(sizeof(t_flags));
+	help->i = 0;
 	flags->precision = 0;
 	flags->width = 0;
 	flags->bnum = 0;
 	va_start(argptr, s);
-	while (s[i])
+	while (s[help->i])
 	{
-		if (s[i] == '%' && s[i + 1] != '%')
+		if (s[help->i] == '%' && s[help->i + 1] != '%')
 		{
-			if (ft_count_flags(s + i) == 0)
+			if (ft_count_flags(s + help->i) == 0)
+			{
+				free(flags);
+				free(help);
 				return (-1);
-			tmp_str = ft_strsub(s, i, ft_count_flags(s + i));
-			ft_is_a_flag(tmp_str, flags);
-			// printf("flags->size_flag - [%c]\n", flags->size_flag);
-			// printf("flags->type - [%c]\n", flags->type);
-			// printf("flags->plus - [%c]\n", flags->plus);
-			// printf("flags->star - [%c]\n", flags->star);
-			// printf("flags->minus - [%c]\n", flags->minus);
-			// printf("flags->zero - [%c]\n", flags->zero);
-			// printf("flags->hash - [%c]\n", flags->hash);
-			// printf("flags->space - [%c]\n", flags->space);
-			// printf("flags->precision - [%d]\n", flags->precision);
-			// printf("flags->width - [%d]\n", flags->width);
+			}
+			help->tmp_str = ft_strsub(s, help->i, ft_count_flags(s + help->i));
+			ft_is_a_flag(help->tmp_str, flags);
+			ft_strdel(&help->tmp_str);
 			if (MB_CUR_MAX == 1 && flags->type == 'C')
 				flags->type = 'c';
-			ft_strdel(&tmp_str);
 			if (flags->star == '*')
 			{
-				temp = va_arg(argptr, unsigned long long);
-				if (temp)
-					flags->width = temp;
+				help->temp = va_arg(argptr, unsigned long long);
+				if (help->temp)
+					flags->width = help->temp;
 			}
 			if (flags->type == 'u' || flags->type == 'U' || flags->type == 'b')
 			{
-				ft_which_output_u(flags->type, &ft_outputu);
-				ft_outputu(flags, va_arg(argptr, unsigned long long));
+				ft_which_output_u(flags->type, &help->ft_outputu);
+				help->ft_outputu(flags, va_arg(argptr, unsigned long long));
 			}
 			else
 			{
-				ft_which_output(flags->type, &ft_output);
-				ft_output(flags, va_arg(argptr, long long int));
+				ft_which_output(flags->type, &help->ft_output);
+				help->ft_output(flags, va_arg(argptr, long long int));
 			}
-			i = i + ft_count_flags(s + i);
+			help->i = help->i + ft_count_flags(s + help->i);
 		}
-		else if (s[i] == '%' && s[i + 1] == '%')
+		else if (s[help->i] == '%' && s[help->i + 1] == '%')
 		{
-			flags->bnum += ft_putchar(s[i]);
-			i = i + 2;
+			flags->bnum += ft_putchar(s[help->i]);
+			help->i = help->i + 2;
 		}
 		else
-			flags->bnum += ft_putchar(s[i++]);
+			flags->bnum += ft_putchar(s[help->i++]);
 	}
 	va_end(argptr);
+	free(help);
 	free(flags);
 	return (flags->bnum);
 }
+
