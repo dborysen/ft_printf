@@ -79,3 +79,9 @@ void	ft_output_p(t_flags *flags, long long argptr)
 	flags->bnum += ft_putstr(temp);
 	ft_strdel(&temp);
 }
+
+void	output_help(const char *s, t_flags *flags, t_phelp *help)
+{
+	flags->bnum += ft_putchar(s[help->i]);
+	help->i = help->i + 2;
+}
