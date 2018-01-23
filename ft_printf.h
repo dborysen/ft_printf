@@ -36,10 +36,11 @@ typedef struct	s_phelp
 {
 	int		i;
 	int		temp;
+	int 	t_bnum;
 	char	*tmp_str;
 	void	(*ft_output)(t_flags*, long long);
 	void	(*ft_outputu)(t_flags*, unsigned long long);
-	va_list	argptr;
+	va_list	a;
 }				t_phelp;
 
 void			ft_output_obig(t_flags *flags, long long argptr);

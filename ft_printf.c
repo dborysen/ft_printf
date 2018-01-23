@@ -118,26 +118,26 @@ int		ft_printf(const char *s, ...)
 	t_flags	*flags;
 
 	fill_flags(&flags, &help);
-	va_start(help->argptr, s);
+	va_start(help->a, s);
 	while (s[help->i])
 	{
 		if (s[help->i] == '%' && s[help->i + 1] != '%')
 		{
-			if (free_help(s + help->i, &flags, &help) == -1)
-				return (-1);
+			// if (free_help(s + help->i, &flags, &help) == -1)
+			// 	return (-1);
 			string_help(s, flags, help);
 			if (flags->star == '*')
-				pf_starhelp(flags, help, va_arg(help->argptr, unsigned long long));
+				pf_starhelp(flags, help, va_arg(help->a, unsigned long long));
 			(flags->type == 'u' || flags->type == 'U' || flags->type == 'b') ?
-			unsigned_help(s, flags, help, va_arg(help->argptr, unsigned long long)) :
-			signed_help(s, flags, help, va_arg(help->argptr, long long));
+			unsigned_help(s, flags, help, va_arg(help->a, unsigned long long)) :
+			signed_help(s, flags, help, va_arg(help->a, long long));
 		}
 		else if (s[help->i] == '%' && s[help->i + 1] == '%')
 			output_help(s, flags, help);
 		else
 			flags->bnum += ft_putchar(s[help->i++]);
 	}
-	va_end(help->argptr);
+	va_end(help->a);
 	free(help);
 	free(flags);
 	return (flags->bnum);
