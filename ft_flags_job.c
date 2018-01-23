@@ -107,10 +107,11 @@ void	ft_is_a_flag(char *s, t_flags *flags)
 		ft_precision_search(s, flags);
 	ft_width_search(s, flags);
 	ft_zero_search(s, flags);
-	if (flags->type != 'c' && flags->type != 's')
-		flags->size_flag = ft_priority_flag(s);
-	else
-		flags->size_flag = ft_char_priority_flag(s);
+	(flags->type != 'c' && flags->type != 's') ?
+	(flags->size_flag = ft_priority_flag(s)) :
+	(flags->size_flag = ft_char_priority_flag(s));
+	if (MB_CUR_MAX == 1 && flags->type == 'C')
+		flags->type = 'c';
 }
 
 int		ft_count_digit(long long n)

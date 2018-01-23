@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "ft_printf.h"
 
 void	ft_which_output(char type, void (**ft_output)(t_flags *, long long))
@@ -70,13 +69,39 @@ int pf_kostil1(const char *s, t_flags **flags, t_phelp **help)
 {
 	if (ft_count_flags(s) == 0)
 	{
-		// free_lists(&flags, &help);
 		free(*flags);
 		free(*help);
 		return (-1);
 	}
 	return (0);
 }
+
+void pf_kostil2(const char *s, t_flags *flags, t_phelp *help)
+{
+	flags->bnum += ft_putchar(s[help->i]);
+	help->i = help->i + 2;
+}
+
+void pf_kostil3(const char *s, t_flags *flags, t_phelp *help,
+	unsigned long long argptr)
+{
+	help->temp = argptr;
+	ft_which_output_u(flags->type, &help->ft_outputu);
+	help->ft_outputu(flags, help->temp);
+	help->i = help->i + ft_count_flags(s + help->i);
+}
+
+void pf_kostil4(const char *s, t_flags *flags, t_phelp *help, long long argptr)
+{
+	ft_which_output(flags->type, &help->ft_output);
+	help->ft_output(flags, argptr);
+	help->i = help->i + ft_count_flags(s + help->i);
+}
+
+// void pf_kostil5(t_flags *flags, t_phelp *help, unsigned long long argptr)
+// {
+	
+// }
 
 int		ft_printf(const char *s, ...)
 {
@@ -92,49 +117,29 @@ int		ft_printf(const char *s, ...)
 		{
 			if (pf_kostil1(s + help->i, &flags, &help) == -1)
 				return (-1);
-			// if (ft_count_flags(s + help->i) == 0)
-			// {
-			// 	// free_lists(&flags, &help);
-			// 	free(flags);
-			// 	free(help);
-			// 	return (-1);
-			// }
 			help->tmp_str = ft_strsub(s, help->i, ft_count_flags(s + help->i));
 			ft_is_a_flag(help->tmp_str, flags);
 			ft_strdel(&help->tmp_str);
-			if (MB_CUR_MAX == 1 && flags->type == 'C')
-				flags->type = 'c';
+			// if (MB_CUR_MAX == 1 && flags->type == 'C')
+			// 	flags->type = 'c';
 			if (flags->star == '*')
 			{
 				help->temp = va_arg(argptr, unsigned long long);
 				if (help->temp)
 					flags->width = help->temp;
 			}
-			if (flags->type == 'u' || flags->type == 'U' || flags->type == 'b')
-			{
-				help->temp = va_arg(argptr, unsigned long long);
-				ft_which_output_u(flags->type, &help->ft_outputu);
-				help->ft_outputu(flags, help->temp);
-			}
-			else
-			{
-				ft_which_output(flags->type, &help->ft_output);
-				help->ft_output(flags, va_arg(argptr, long long int));
-			}
-			help->i = help->i + ft_count_flags(s + help->i);
+			(flags->type == 'u' || flags->type == 'U' || flags->type == 'b') ? 
+				pf_kostil3(s, flags, help, va_arg(argptr, unsigned long long)) :
+				pf_kostil4(s, flags, help, va_arg(argptr, long long));
 		}
 		else if (s[help->i] == '%' && s[help->i + 1] == '%')
-		{
-			flags->bnum += ft_putchar(s[help->i]);
-			help->i = help->i + 2;
-		}
+			pf_kostil2(s, flags, help);
 		else
 			flags->bnum += ft_putchar(s[help->i++]);
 	}
 	va_end(argptr);
-	// free_lists(&flags, &help);
 	free(help);
 	free(flags);
-	// printf("flags->bnum - [%d]\n", flags->bnum);
+	// printf("\nflags->bnum - [%d]\n", flags->bnum);
 	return (flags->bnum);
 }

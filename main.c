@@ -24,7 +24,7 @@ int main(void)
 
 	k = 0;
 
-  ft_printf("mamasita %d\n", 123);
+  ft_printf("[%ju]", 4999999999);
 
 	// ft_printf("mine - [%*d]\n", NULL);
 	// printf("orig - [%*d]\n", NULL);
