@@ -24,7 +24,7 @@ int main(void)
 
 	k = 0;
 
-  ft_printf("%d\n", 123);
+  ft_printf("%####0000 33..1..#00d\n", 123);
 
 	// ft_printf("mine - [%*d]\n", NULL);
 	// printf("orig - [%*d]\n", NULL);

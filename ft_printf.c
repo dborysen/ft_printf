@@ -50,7 +50,15 @@ void	ft_which_output_u(char type, void (**ft_outputu)
 		*ft_outputu = &ft_output_b;
 }
 
-
+void fill_flags(t_flags **flags, t_phelp **help)
+{
+	*help = (t_phelp*)malloc(sizeof(t_phelp));
+	*flags = (t_flags*)malloc(sizeof(t_flags));
+	(*help)->i = 0;
+	(*flags)->precision = 0;
+	(*flags)->width = 0;
+	(*flags)->bnum = 0;
+}
 
 int		ft_printf(const char *s, ...)
 {
@@ -58,12 +66,7 @@ int		ft_printf(const char *s, ...)
 	t_flags	*flags;
 	va_list	argptr;
 
-	help = (t_phelp*)malloc(sizeof(t_phelp));
-	flags = (t_flags*)malloc(sizeof(t_flags));
-	help->i = 0;
-	flags->precision = 0;
-	flags->width = 0;
-	flags->bnum = 0;
+	fill_flags(&flags, &help);
 	va_start(argptr, s);
 	while (s[help->i])
 	{
@@ -111,4 +114,3 @@ int		ft_printf(const char *s, ...)
 	free(flags);
 	return (flags->bnum);
 }
-
