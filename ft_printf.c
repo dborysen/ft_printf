@@ -49,7 +49,7 @@ void	ft_which_output_u(char type, void (**ft_outputu)
 		*ft_outputu = &ft_output_b;
 }
 
-void fill_flags(t_flags **flags, t_phelp **help)
+void	fill_flags(t_flags **flags, t_phelp **help)
 {
 	*help = (t_phelp*)malloc(sizeof(t_phelp));
 	*flags = (t_flags*)malloc(sizeof(t_flags));
@@ -59,13 +59,13 @@ void fill_flags(t_flags **flags, t_phelp **help)
 	(*flags)->bnum = 0;
 }
 
-void free_lists(t_flags **flags, t_phelp **help)
+void	free_lists(t_flags **flags, t_phelp **help)
 {
 	free(*flags);
 	free(*help);
 }
 
-int free_help(const char *s, t_flags **flags, t_phelp **help)
+int		free_help(const char *s, t_flags **flags, t_phelp **help)
 {
 	if (ft_count_flags(s) == 0)
 	{
@@ -76,36 +76,36 @@ int free_help(const char *s, t_flags **flags, t_phelp **help)
 	return (0);
 }
 
-void output_help(const char *s, t_flags *flags, t_phelp *help)
+void	output_help(const char *s, t_flags *flags, t_phelp *help)
 {
 	flags->bnum += ft_putchar(s[help->i]);
 	help->i = help->i + 2;
 }
 
-void unsigned_help(const char *s, t_flags *flags, t_phelp *help,
+void	unsigned_help(const char *s, t_flags *flags, t_phelp *help,
 	unsigned long long argptr)
 {
-	help->temp = argptr;
 	ft_which_output_u(flags->type, &help->ft_outputu);
-	help->ft_outputu(flags, help->temp);
+	help->ft_outputu(flags, argptr);
 	help->i = help->i + ft_count_flags(s + help->i);
 }
 
-void signed_help(const char *s, t_flags *flags, t_phelp *help, long long argptr)
+void	signed_help(const char *s, t_flags *flags, t_phelp *help,
+	long long argptr)
 {
 	ft_which_output(flags->type, &help->ft_output);
 	help->ft_output(flags, argptr);
 	help->i = help->i + ft_count_flags(s + help->i);
 }
 
-void pf_starhelp(t_flags *flags, t_phelp *help, unsigned long long argptr)
+void	pf_starhelp(t_flags *flags, t_phelp *help, unsigned long long argptr)
 {
 	help->temp = argptr;
 	if (help->temp)
 		flags->width = help->temp;
 }
 
-void pf_kostil(const char *s, t_flags *flags, t_phelp *help)
+void	string_help(const char *s, t_flags *flags, t_phelp *help)
 {
 	help->tmp_str = ft_strsub(s, help->i, ft_count_flags(s + help->i));
 	ft_is_a_flag(help->tmp_str, flags);
@@ -116,32 +116,28 @@ int		ft_printf(const char *s, ...)
 {
 	t_phelp *help;
 	t_flags	*flags;
-	va_list	argptr;
 
 	fill_flags(&flags, &help);
-	va_start(argptr, s);
+	va_start(help->argptr, s);
 	while (s[help->i])
 	{
 		if (s[help->i] == '%' && s[help->i + 1] != '%')
 		{
 			if (free_help(s + help->i, &flags, &help) == -1)
 				return (-1);
-			pf_kostil(s, flags, help);
-			// help->tmp_str = ft_strsub(s, help->i, ft_count_flags(s + help->i));
-			// ft_is_a_flag(help->tmp_str, flags);
-			// ft_strdel(&help->tmp_str);
+			string_help(s, flags, help);
 			if (flags->star == '*')
-				pf_starhelp(flags, help, va_arg(argptr, unsigned long long));
-			(flags->type == 'u' || flags->type == 'U' || flags->type == 'b') ? 
-				unsigned_help(s, flags, help, va_arg(argptr, unsigned long long)) :
-				signed_help(s, flags, help, va_arg(argptr, long long));
+				pf_starhelp(flags, help, va_arg(help->argptr, unsigned long long));
+			(flags->type == 'u' || flags->type == 'U' || flags->type == 'b') ?
+			unsigned_help(s, flags, help, va_arg(help->argptr, unsigned long long)) :
+			signed_help(s, flags, help, va_arg(help->argptr, long long));
 		}
 		else if (s[help->i] == '%' && s[help->i + 1] == '%')
 			output_help(s, flags, help);
 		else
 			flags->bnum += ft_putchar(s[help->i++]);
 	}
-	va_end(argptr);
+	va_end(help->argptr);
 	free(help);
 	free(flags);
 	return (flags->bnum);

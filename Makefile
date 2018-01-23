@@ -35,7 +35,7 @@ comp:
 	@gcc main.c $(SRCS) libft/libft.a && ./a.out | cat -e
 
 norm:
-	norminette -R CheckForbiddenSourceHeader $(SRCS)
+	norminette -R CheckForbiddenSourceHeader
 
 clean:
 	@rm -f $(OBJECT)
