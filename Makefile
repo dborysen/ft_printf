@@ -32,7 +32,7 @@ $(NAME):
 	@ranlib $(NAME)
 
 comp:
-	@gcc main.c $(SRCS) libft/libft.a && ./a.out | cat -e
+	@gcc -Wall -Wextra -Werror main.c $(SRCS) libft/libft.a && ./a.out | cat -e
 
 norm:
 	norminette -R CheckForbiddenSourceHeader $(SRCS) ft_printf.h
