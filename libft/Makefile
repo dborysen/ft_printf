@@ -18,17 +18,23 @@ OBJECT = ft_count_digit_u.o get_next_line.o ft_putllu.o ft_putlonglong.o ft_lows
 
 INCLUDES = includes/
 
+FLAGS = -Wall -Wextra -Werror
+
 all: $(NAME)
 
-$(NAME):
-	gcc -I $(INCLUDES) -Wall -Wextra -Werror -c $(SRCS)
-	ar rc $(NAME) $(OBJECT)
-	ranlib $(NAME)
+$(NAME): $(OBJECT)
+	@ar rc $(NAME) $(OBJECT)
+	@ranlib $(NAME)
+
+%.o: %.c
+	gcc $(FLAGS) -I $(INCLUDES) -c $< 
 
 clean:
-	rm -f $(OBJECT)
+	@rm -f $(OBJECT)
+	@echo all clear
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo libft.a has been deleted
 
 re: fclean all

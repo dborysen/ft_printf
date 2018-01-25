@@ -24,15 +24,17 @@ FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OBJECT)
 	@make -C $(LIBFT)
 	@cp libft/libft.a ./$(NAME)
-	@gcc -I $(INCLUDES) -Wall -Wextra -Werror -c $(SRCS)
 	@ar rc $(NAME) $(OBJECT)
 	@ranlib $(NAME)
 
+%.o: %.c
+	gcc $(FLAGS) -I $(INCLUDES) -c $< 
+
 comp:
-	@gcc -Wall -Wextra -Werror main.c $(SRCS) libft/libft.a && ./a.out | cat -e
+	@gcc -Wall -Wextra -Werror main.c $(SRCS) libft/libft.a && ./a.out 
 
 norm:
 	norminette -R CheckForbiddenSourceHeader $(SRCS) ft_printf.h
@@ -44,5 +46,6 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@make fclean -C $(LIBFT)
+	@echo libftprintf.a has been deleted
 
 re: fclean all

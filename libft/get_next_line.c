@@ -90,25 +90,27 @@ int		get_next_line(const int fd, char **line)
 {
 	static t_help	*txt;
 	t_help			*tmp;
-	t_vars			*var;
-	char			buf[BUFF_SIZE + 1];
+	int				ret;
+	char			*hlp;
+	int				pos;
 
-	if (read(fd, buf, 0) < 0 || line == NULL ||
-		!(var = (t_vars*)malloc(sizeof(t_vars))))
+	pos = 0;
+	if (read(fd, "", 0) < 0 || line == NULL)
 		return (-1);
 	tmp = find_fd(&txt, fd);
-	var->hlp = tmp->entr_str;
-	var->ret = read_file(&var->hlp, fd);
-	if (!ft_strln(var->hlp) && (var->ret < BUFF_SIZE))
+	hlp = !tmp->entr_str ? ft_strnew(1) : tmp->entr_str;
+	ret = read_file(&hlp, fd);
+	if (!ft_strln(hlp) && ret == 0)
+	{
+		*line = ft_strnew(1);
+		free(hlp);
 		return (0);
-	if (ft_str_chr(var->hlp, '\n'))
-		var->pos = (ft_str_chr(var->hlp, '\n') - var->hlp);
-	else
-		var->pos = ft_strln(var->hlp);
-	!(ft_str_chr(var->hlp, '\n')) ? (tmp->entr_str = 0) :
-	(tmp->entr_str = ft_strdup(ft_str_chr(var->hlp, '\n') + 1));
-	*line = ft_strsub(var->hlp, 0, var->pos);
-	free(var->hlp);
-	free(var);
+	}
+	(ft_str_chr(hlp, '\n')) ? (pos = (ft_str_chr(hlp, '\n') - hlp)) :
+	(pos = ft_strlen(hlp));
+	!(ft_str_chr(hlp, '\n')) ? (tmp->entr_str = 0) :
+	(tmp->entr_str = ft_strdup(ft_str_chr(hlp, '\n') + 1));
+	*line = ft_strsub(hlp, 0, pos);
+	free(hlp);
 	return (1);
 }

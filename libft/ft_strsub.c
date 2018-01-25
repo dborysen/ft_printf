@@ -28,8 +28,8 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	fresh = (char*)malloc(sizeof(char) * (len + 1));
 	if (fresh == 0)
 		return (NULL);
-	while (len-- && (fresh[l++] = s[start++]))
-		;
+	while (len--)
+		fresh[l++] = s[start++];
 	fresh[l] = '\0';
 	return (fresh);
 }

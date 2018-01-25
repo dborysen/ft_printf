@@ -32,15 +32,6 @@ typedef struct		s_help
 	struct s_help	*next;
 }					t_help;
 
-typedef struct		s_vars
-{
-	int		ret;
-	int		pos;
-	char	*del_me;
-	char	*hlp;
-
-}					t_vars;
-
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
